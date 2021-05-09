@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node index"
+    "dev": "nodemon --exec babel-node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,8 @@
   "homepage": "https://github.com/happysubin/youtube-clone#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "i": "^0.3.6"
+    "i": "^0.3.6",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
