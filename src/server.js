@@ -10,11 +10,12 @@ const PORT = 4000;
 const serverListening = () => {
   console.log(`server listening on PORT http://localhost:${PORT}`);
 };
-
+app.set("views", process.cwd() + "/src/views");
+app.set("view engine", "pug");
 app.use(logger);
 
-app.use("/users", userRouter);
 app.use("/", globalRouter);
+app.use("/users", userRouter);
 app.use("/videos", videoRouter);
 
 app.listen(PORT, serverListening);
