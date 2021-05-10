@@ -1,3 +1,8 @@
+const fakeUser = {
+  name: "samsung",
+  loggedIn: true,
+};
+
 export const see = (req, res) => {
   return res.render("see");
 };
@@ -6,7 +11,7 @@ export const editVideo = (req, res) => {
   return res.render("editVideo");
 };
 export const trending = (req, res) => {
-  res.render("home", { pageTitle: "Home" });
+  res.render("home", { pageTitle: "Home", fakeUser });
 };
 export const search = (req, res) => {
   res.send("search");
