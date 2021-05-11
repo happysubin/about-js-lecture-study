@@ -55,11 +55,25 @@ export const search = (req, res) => {
   res.send("search");
 };
 
-export const upload = (req, res) => {
-  res.send("upload");
-};
-
 export const deleteVideo = (req, res) => {
   console.log(req.params);
   return res.send("delete video");
+};
+
+export const getUpload = (req, res) => {
+  return res.render("upload", { pageTitle: "Upload" });
+};
+
+export const postUpload = (req, res) => {
+  const { title } = req.body;
+  const newVideo = {
+    title,
+    rating: 0,
+    comments: 0,
+    createdAt: "just now",
+    views: 0,
+    id: videos.length + 1,
+  };
+  videos.push(newVideo);
+  return res.redirect("/");
 };

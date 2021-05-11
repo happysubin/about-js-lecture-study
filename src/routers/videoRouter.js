@@ -3,8 +3,9 @@ import {
   getEdit,
   postEdit,
   see,
-  upload,
+  getUpload,
   deleteVideo,
+  postUpload,
 } from "../controllers/videoController";
 const videoRouter = express.Router();
 
@@ -12,5 +13,6 @@ videoRouter.get("/:id(\\d+)", see); // 정규식
 videoRouter.route("/:id(\\d+)/edit").get(getEdit).post(postEdit);
 
 videoRouter.get("/:id(\\d+)/delete", deleteVideo);
-videoRouter.get("/upload", upload);
+
+videoRouter.route("/upload").get(getUpload).post(postUpload);
 export default videoRouter;
