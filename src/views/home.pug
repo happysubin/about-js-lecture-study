@@ -4,8 +4,8 @@ include mixins/video
 block content 
      h2 Welcome here you will see the trending videos 
      ul
-        each item in videos
-           +video(item)
+        each video in videos
+           +video(video)
                     
         else
             li there are no values
