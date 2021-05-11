@@ -33,10 +33,20 @@ export const see = (req, res) => {
   const video = videos[id - 1]; // id를 이용해서 video를 찾는다. 배열 인덱스는 0 부터 시작 주의
   return res.render("see", { pageTitle: `watch ${video.title}`, video });
 };
-export const editVideo = (req, res) => {
-  console.log(req.params);
-  return res.render("editVideo");
+
+export const postEdit = (req, res) => {
+  const { id } = req.params;
+  const title = req.body.title;
+  videos[id - 1].title = title; // 업데이트
+  return res.redirect(`/videos/${id}`);
 };
+
+export const getEdit = (req, res) => {
+  const { id } = req.params; //지금은 파라미터를 통해 비디오를 찾는다.
+  const video = videos[id - 1];
+  return res.render("editVideo", { pageTitle: `Edit ${video.title}`, video }); //obj로 보내는걸 주의
+};
+
 export const trending = (req, res) => {
   res.render("home", { pageTitle: "Home", videos });
 };

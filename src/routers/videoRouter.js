@@ -1,6 +1,7 @@
 import express from "express";
 import {
-  editVideo,
+  getEdit,
+  postEdit,
   see,
   upload,
   deleteVideo,
@@ -8,7 +9,8 @@ import {
 const videoRouter = express.Router();
 
 videoRouter.get("/:id(\\d+)", see); // 정규식
-videoRouter.get("/:id(\\d+)/edit", editVideo);
+videoRouter.route("/:id(\\d+)/edit").get(getEdit).post(postEdit);
+
 videoRouter.get("/:id(\\d+)/delete", deleteVideo);
 videoRouter.get("/upload", upload);
 export default videoRouter;
