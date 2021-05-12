@@ -36,17 +36,23 @@ export const getUpload = (req, res) => {
 
 export const postUpload = async (req, res) => {
   const { title, hashtags, description } = req.body;
-  await Video.create({
-    title,
-    description,
-    createdAt: Date.now(),
-    hashtags: hashtags.split(",").map((word) => `#${word}`),
-    meta: {
-      views: 0,
-      rating: 0,
-    },
-  });
-  /* 이거랑 위에 코드랑 2가지 방법으로 저장가능. 위는 바로 저장. 아래는 객체 생성후 저장
+  try {
+    await Video.create({
+      title,
+      description,
+      hashtags: hashtags.split(",").map((word) => `#${word}`),
+    });
+    return res.redirect("/");
+  } catch (error) {
+    console.log(error);
+    return res.render("upload", {
+      pageTitle: "Upload Video",
+      errorMessage: error._message,
+    });
+  }
+};
+
+/* 이거랑 위에 코드랑 2가지 방법으로 저장가능. 위는 바로 저장. 아래는 객체 생성후 저장
   const video = new Video({
     title,
     description,
@@ -58,5 +64,3 @@ export const postUpload = async (req, res) => {
     },
   });
   await video.save(); //이게 db에 저장 , 저장하는걸 기다려줘야하므로 await*/
-  return res.redirect("/");
-};
