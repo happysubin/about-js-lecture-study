@@ -16,10 +16,9 @@ export const getEdit = (req, res) => {
   return res.render("editVideo", { pageTitle: `Edit` }); //obj로 보내는걸 주의
 };
 
-export const trending = (req, res) => {
-  Video.find({}, (error, documents) => {
-    res.render("home", { pageTitle: "Home", videos: [] });
-  });
+export const trending = async (req, res) => {
+  const videos = await Video.find({});
+  return res.render("home", { pageTitle: "Home", videos });
 };
 
 export const search = (req, res) => {
@@ -35,8 +34,29 @@ export const getUpload = (req, res) => {
   return res.render("upload", { pageTitle: "Upload" });
 };
 
-export const postUpload = (req, res) => {
-  const { title } = req.body;
-
+export const postUpload = async (req, res) => {
+  const { title, hashtags, description } = req.body;
+  await Video.create({
+    title,
+    description,
+    createdAt: Date.now(),
+    hashtags: hashtags.split(",").map((word) => `#${word}`),
+    meta: {
+      views: 0,
+      rating: 0,
+    },
+  });
+  /* 이거랑 위에 코드랑 2가지 방법으로 저장가능. 위는 바로 저장. 아래는 객체 생성후 저장
+  const video = new Video({
+    title,
+    description,
+    hashTags: hashtags.split(",").map((word) => `#${word}`),
+    createdAt: Date.now(),
+    meta: {
+      views: 0,
+      rating: 0,
+    },
+  });
+  await video.save(); //이게 db에 저장 , 저장하는걸 기다려줘야하므로 await*/
   return res.redirect("/");
 };
