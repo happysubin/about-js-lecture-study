@@ -1,8 +1,9 @@
 import Video from "../models/Video";
 
-export const see = (req, res) => {
+export const see = async (req, res) => {
   const { id } = req.params;
-  return res.render("see", { pageTitle: `watch ` });
+  const video = await Video.findById(id);
+  return res.render("see", { pageTitle: video.title, video });
 };
 
 export const postEdit = (req, res) => {
