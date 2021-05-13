@@ -3,18 +3,33 @@ import Video from "../models/Video";
 export const see = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
-  return res.render("see", { pageTitle: video.title, video });
+  if (video) {
+    return res.render("see", { pageTitle: video.title, video });
+  } else return res.render("404", { pageTitle: "404! Video not found" });
 };
 
-export const postEdit = (req, res) => {
+export const postEdit = async (req, res) => {
   const { id } = req.params;
-  const title = req.body.title;
+  const { title, description, hashtags } = req.body;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.render("404", { pageTitle: "Video not found." });
+  }
+  video.title = title;
+  video.description = description;
+  video.hashtags = hashtags
+    .split(",")
+    .map((word) => (word.startsWith("#") ? word : `#${word}`));
+  await video.save();
   return res.redirect(`/videos/${id}`);
 };
 
-export const getEdit = (req, res) => {
-  const { id } = req.params; //지금은 파라미터를 통해 비디오를 찾는다.
-  return res.render("editVideo", { pageTitle: `Edit` }); //obj로 보내는걸 주의
+export const getEdit = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (!video) return res.render("404", { pageTitle: "404! Video not found" });
+  else
+    return res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
 };
 
 export const trending = async (req, res) => {
@@ -41,7 +56,9 @@ export const postUpload = async (req, res) => {
     await Video.create({
       title,
       description,
-      hashtags: hashtags.split(",").map((word) => `#${word}`),
+      hashtags: hashtags
+        .split(",")
+        .map((word) => (word.startsWith("#") ? word : `#${word}`)),
     });
     return res.redirect("/");
   } catch (error) {
