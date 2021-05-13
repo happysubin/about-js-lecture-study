@@ -3,7 +3,7 @@ import Video from "../models/Video";
 export const see = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
-  if (video) {
+  if (!video) {
     return res.render("see", { pageTitle: video.title, video });
   } else return res.render("404", { pageTitle: "404! Video not found" });
 };
@@ -11,16 +11,17 @@ export const see = async (req, res) => {
 export const postEdit = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
-  const video = await Video.findById(id);
+  const video = await Video.exists({ _id: id });
   if (!video) {
     return res.render("404", { pageTitle: "Video not found." });
   }
-  video.title = title;
-  video.description = description;
-  video.hashtags = hashtags
-    .split(",")
-    .map((word) => (word.startsWith("#") ? word : `#${word}`));
-  await video.save();
+  await Video.findByIdAndUpdate(id, {
+    title,
+    description,
+    hashtags: hashtags
+      .split(",")
+      .map((word) => (word.startsWith("#") ? word : `#${word}`)),
+  });
   return res.redirect(`/videos/${id}`);
 };
 
