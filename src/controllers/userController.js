@@ -8,8 +8,23 @@ export const deleteUser = (req, res) => {
 export const getJoin = (req, res) => {
   res.render("join", { pageTitle: "Join" });
 };
+
 export const postJoin = async (req, res) => {
-  const { name, username, email, password, location } = req.body;
+  const { name, username, email, password, location, password2 } = req.body;
+  const pageTitle = "Join";
+  if (password !== password2) {
+    return res.render("join", {
+      pageTitle,
+      errorMessage: "Password confirmation does not match.",
+    });
+  }
+  const exists = await User.exists({ $or: [{ email }, { username }] });
+  if (exists) {
+    return res.render("join", {
+      pageTitle,
+      errorMessage: "This username/email is already taken.",
+    });
+  }
   try {
     await User.create({
       name,
@@ -23,6 +38,7 @@ export const postJoin = async (req, res) => {
     console.log(error);
   }
 };
+
 export const login = (req, res) => {
   res.send("login");
 };
