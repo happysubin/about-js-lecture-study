@@ -1,4 +1,6 @@
 import User from "../models/User";
+import brcypt from "bcrypt";
+
 export const edit = (req, res) => {
   res.send("Edit User");
 };
@@ -35,12 +37,11 @@ export const postJoin = async (req, res) => {
     });
     res.redirect("/login");
   } catch (error) {
-    console.log(error);
+    return res.status(400).render("join", {
+      pageTitle: "Join",
+      errorMessage: error._message,
+    });
   }
-};
-
-export const login = (req, res) => {
-  res.send("login");
 };
 
 export const see = (req, res) => {
@@ -48,4 +49,28 @@ export const see = (req, res) => {
 };
 export const logout = (req, res) => {
   res.send("logout");
+};
+
+export const getLogin = (req, res) => {
+  return res.render("login", { pageTitle: "Login" });
+};
+
+export const postLogin = async (req, res) => {
+  const { password, username } = req.body;
+  const user = await User.findOne({ username });
+  const pageTitle = "Login";
+  if (!user) {
+    return res.status(400).render("login", {
+      pageTitle,
+      errorMessage: "An account with this username does not exists.",
+    });
+  }
+  const ok = await brcypt.compare(password, user.password);
+  if (!ok) {
+    return res.status(400).render("login", {
+      pageTitle,
+      errorMessage: "Wrong password",
+    });
+  }
+  return res.redirect("/");
 };
