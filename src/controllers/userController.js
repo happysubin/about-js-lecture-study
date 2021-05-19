@@ -1,5 +1,6 @@
 import User from "../models/User";
 import brcypt from "bcrypt";
+import session from "express-session";
 
 export const edit = (req, res) => {
   res.send("Edit User");
@@ -65,12 +66,15 @@ export const postLogin = async (req, res) => {
       errorMessage: "An account with this username does not exists.",
     });
   }
-  const ok = await brcypt.compare(password, user.password);
+  const ok = await brcypt.compare(password, user.password); //입력된 해시값으로 db에 저장된해시값과 비교
   if (!ok) {
     return res.status(400).render("login", {
       pageTitle,
       errorMessage: "Wrong password",
     });
   }
+  //req.session obj에 정보를 추가하는 중~
+  req.session.loggedIn = true;
+  req.session.user = user;
   return res.redirect("/");
 };

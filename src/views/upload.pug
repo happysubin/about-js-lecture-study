@@ -1,8 +1,10 @@
 extends layout
 
 block content
+ 
     form(method="POST")
         input(placeholder="Title", required, name="title" type="text" maxlength=60)
         input(placeholder="Descriptions", required, name="description" type="text" minlength=20)
         input(placeholder="Hashtags, separated by comma", required, name="hashtags" type="text")
         input(type="submit", value="Upload Video")
+    
