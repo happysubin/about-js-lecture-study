@@ -4,6 +4,7 @@ import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import session from "express-session";
+import mongoStore from "connect-mongo";
 import { localmiddlewares } from "./middlewares";
 
 const app = express();
@@ -17,8 +18,12 @@ app.use(logger);
 app.use(
   session({
     secret: "Hello!",
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
+    store: mongoStore.create({
+      mongoUrl:
+        "mongodb+srv://admin:kAuOOf2e7vCyf9MR@mongodbtutorial.9kx8g.mongodb.net/wetube?retryWrites=true&w=majority",
+    }),
   })
 );
 app.use(localmiddlewares);
