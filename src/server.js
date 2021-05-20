@@ -17,12 +17,11 @@ app.use(logger);
 
 app.use(
   session({
-    secret: "Hello!",
+    secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
     store: mongoStore.create({
-      mongoUrl:
-        "mongodb+srv://admin:kAuOOf2e7vCyf9MR@mongodbtutorial.9kx8g.mongodb.net/wetube?retryWrites=true&w=majority",
+      mongoUrl: process.env.DB_URL,
     }),
   })
 );
