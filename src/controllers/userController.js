@@ -1,6 +1,8 @@
 import User from "../models/User";
 import brcypt from "bcrypt";
+import fetch from "node-fetch";
 import session from "express-session";
+import { token } from "morgan";
 
 export const edit = (req, res) => {
   res.send("Edit User");
@@ -94,18 +96,48 @@ export const startGithubLogin = (req, res) => {
 export const finalGithubLogin = async (req, res) => {
   const baseURL = "https://github.com/login/oauth/access_token";
   const config = {
+    // base url 에 포스트할때 config obj안에 파라미터값들이 필요. url과 파라미터!
     client_id: process.env.GH_CLIENT,
     client_secret: process.env.GH_SECRET,
     code: req.query.code,
   };
   const params = new URLSearchParams(config).toString();
   const finalURL = `${baseURL}?${params}`;
-  const data = await fetch(finalUrl, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-    },
-  });
-  const json = data.json();
-  console.log(json); /// node js 에서는 fetch 함수가 실행되지 않지만 논리를 파악하기위해 일단 이렇게 코드를 짠다
+  const tokenRequest = await (
+    await fetch(finalURL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+  ).json();
+
+  if ("access_token" in tokenRequest) {
+    const { access_token } = tokenRequest;
+    const apiUrl = "https://api.github.com";
+    const userData = await (
+      await fetch(`${apiUrl}/user`, {
+        headers: {
+          Authorization: `token ${access_token}`,
+        },
+      })
+    ).json();
+    console.log(userData);
+    const emailData = await (
+      await fetch(`${apiUrl}/user/emails`, {
+        headers: {
+          Authorization: `token ${access_token}`,
+        },
+      })
+    ).json();
+    console.log(emailData);
+    const email = emailData.find(
+      (email) => email.primary === true && email.verified === true
+    );
+    if (!email) {
+      return res.redirect("/login");
+    }
+  } else {
+    return res.redirect("/login");
+  }
 };

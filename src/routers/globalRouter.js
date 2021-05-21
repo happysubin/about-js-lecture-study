@@ -13,4 +13,5 @@ globalRouter.get("/", trending);
 globalRouter.route("/join").get(getJoin).post(postJoin);
 globalRouter.get("/search", search);
 globalRouter.route("/login").get(getLogin).post(postLogin);
+
 export default globalRouter;
