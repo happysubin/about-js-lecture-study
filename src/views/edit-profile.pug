@@ -1,0 +1,8 @@
+extends layout 
+block content 
+    form(method="POST")
+        input(type="text" name="name" placeholder="Name" required value=user.name)
+        input(type="eamil" name="email" placeholder="Email" required value=user.email)
+        input(type="text" name="username" placeholder="User Name" required value=user.username)
+        input(type="text" name="location" placeholder="Location" required value=user.location)
+        input(type="submit" value="Update profile")

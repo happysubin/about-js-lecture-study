@@ -7,12 +7,21 @@ import {
   deleteVideo,
   postUpload,
 } from "../controllers/videoController";
+import { protectorMiddleware } from "../middlewares";
 const videoRouter = express.Router();
 
 videoRouter.get("/:id([0-9a-f]{24})", see); // 정규식
-videoRouter.route("/:id([0-9a-f]{24})/edit").get(getEdit).post(postEdit); //몽고 db 아이디를 위한 정규식이다
+videoRouter
+  .route("/:id([0-9a-f]{24})/edit")
+  .all(protectorMiddleware)
+  .get(getEdit)
+  .post(postEdit); //몽고 db 아이디를 위한 정규식이다
 
-videoRouter.get("/:id([0-9a-f]{24})/delete", deleteVideo);
+videoRouter.get("/:id([0-9a-f]{24})/delete", protectorMiddleware, deleteVideo);
 
-videoRouter.route("/upload").get(getUpload).post(postUpload);
+videoRouter
+  .route("/upload")
+  .all(protectorMiddleware)
+  .get(getUpload)
+  .post(postUpload);
 export default videoRouter;
