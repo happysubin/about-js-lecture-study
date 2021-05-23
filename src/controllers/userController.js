@@ -14,6 +14,13 @@ export const postEdit = async (req, res) => {
     },
     body: { name, email, username, location },
   } = req;
+  const exists = await User.exists({ $or: [{ email }, { username }] });
+  if (exists)
+    return res.status(400).render("edit-profile", {
+      pageTitle: "Edit profile",
+      errorMessage: "This username/email is already taken",
+    });
+
   const updateUser = await User.findByIdAndUpdate(
     _id,
     {
@@ -184,3 +191,39 @@ export const finalGithubLogin = async (req, res) => {
     return res.redirect("/login");
   }
 };
+
+export const getChangepassword = (req, res) => {
+  if (req.session.user.socialOnly === true) {
+    res.redirect("/");
+  }
+  return res.render("change-password", { pageTitle: "Change PassWord" });
+};
+
+export const postChangepassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { newPassword, oldPassword, newPasswordConfirmation },
+  } = req;
+  if (newPassword != newPasswordConfirmation) {
+    return res.status(400).render("change-password", {
+      pageTitle: "Change PassWord",
+      errorMessage: "The password does not match the confirmation",
+    });
+  }
+  const user = await User.findById(_id);
+  const ok = await brcypt.compare(oldPassword, user.password);
+  if (!ok) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The current password is incorrect",
+    });
+  }
+  console.log(newPassword, user.password, req.session.user.password);
+  user.password = newPassword;
+  await user.save();
+  console.log(user.password, req.session.user.password);
+  return res.redirect("/users/logout");
+};
+//세션에서 id,비밀번호를 가져와서 비밀번호 업데이트가능.그러나 이때는 세션의 비밀번호도 db의 비밀번호도 바꿔야함
