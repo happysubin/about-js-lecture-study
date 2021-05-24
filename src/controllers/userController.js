@@ -80,9 +80,15 @@ export const postJoin = async (req, res) => {
   }
 };
 
-export const see = (req, res) => {
-  res.send("i see");
+export const getProfile = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  if (!user) {
+    return res.status(404).render("404", { pageTitle: "User not found." });
+  }
+  return res.render("profile", { pageTitle: `${user.name} Profile`, user });
 };
+
 export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");

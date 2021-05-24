@@ -2,7 +2,7 @@ import express from "express";
 import {
   edit,
   deleteUser,
-  see,
+  getProfile,
   logout,
   startGithubLogin,
   finalGithubLogin,
@@ -34,6 +34,6 @@ userRouter
 
 userRouter.get("/github/start", publicOnlyMiddleware, startGithubLogin);
 userRouter.get("/github/final", publicOnlyMiddleware, finalGithubLogin);
-userRouter.get("/:id", see);
+userRouter.get("/:id", getProfile);
 
 export default userRouter;
