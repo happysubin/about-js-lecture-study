@@ -7,7 +7,7 @@ import {
   deleteVideo,
   postUpload,
 } from "../controllers/videoController";
-import { protectorMiddleware } from "../middlewares";
+import { protectorMiddleware, uploadVideo } from "../middlewares";
 const videoRouter = express.Router();
 
 videoRouter.get("/:id([0-9a-f]{24})", see); // 정규식
@@ -23,5 +23,5 @@ videoRouter
   .route("/upload")
   .all(protectorMiddleware)
   .get(getUpload)
-  .post(postUpload);
+  .post(uploadVideo.single("video"), postUpload);
 export default videoRouter;
