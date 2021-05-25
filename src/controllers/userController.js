@@ -3,6 +3,7 @@ import brcypt from "bcrypt";
 import fetch from "node-fetch";
 import session from "express-session";
 import { token } from "morgan";
+import Video from "../models/Video";
 
 export const getEdit = (req, res) => {
   res.render("edit-profile", { pageTitle: "Edit profile" });
@@ -86,7 +87,12 @@ export const getProfile = async (req, res) => {
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found." });
   }
-  return res.render("profile", { pageTitle: `${user.name} Profile`, user });
+  const videos = await Video.find({ owner: user._id });
+  return res.render("profile", {
+    pageTitle: `${user.name} Profile`,
+    user,
+    videos,
+  });
 };
 
 export const logout = (req, res) => {

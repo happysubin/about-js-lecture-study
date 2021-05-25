@@ -3,10 +3,10 @@ import Video from "../models/Video";
 
 export const see = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
-  const owner = await User.findById(video.owner);
+  const video = await Video.findById(id).populate("owner");
+  console.log(video);
   if (video) {
-    return res.render("see", { pageTitle: video.title, video, owner });
+    return res.render("see", { pageTitle: video.title, video });
   } else
     return res.status(404).render("404", { pageTitle: "404! Video not found" });
 };
