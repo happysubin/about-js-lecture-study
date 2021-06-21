@@ -83,15 +83,14 @@ export const postJoin = async (req, res) => {
 
 export const getProfile = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate("videos");
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found." });
   }
-  const videos = await Video.find({ owner: user._id });
+
   return res.render("profile", {
     pageTitle: `${user.name} Profile`,
     user,
-    videos,
   });
 };
 
