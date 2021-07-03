@@ -53,8 +53,8 @@ export const postTweet = (req, res) => {
     id: Date.now().toString(),
     text: text,
     createdAt: new Date(),
-    name: name,
-    username: username,
+    name,
+    username,
     url: "https://www.shutterstock.com/ko/image-photo/closeup-photo-amazing-short-hairdo-lady-1617540484",
   };
   tweets.push(tweet);
