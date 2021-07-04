@@ -1,12 +1,10 @@
-import "express-async-errors";
-
-export let tweets = [
+let tweets = [
   {
     id: "1",
     text: "개발자 지망생들 파이팅!!!",
     createdAt: Date.now().toString(),
-    name: "bob",
-    username: "bob",
+    name: "Ellie",
+    username: "ellie",
     url: "",
   },
   {

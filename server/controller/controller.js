@@ -6,7 +6,7 @@ export const allTweet = async (req, res) => {
   const data = await (username
     ? TweetRepositories.getAllTweetsByUsername(username)
     : //query 에 username 이 존재할 경우 tweet 전체를 살펴서 username이 같은것만 가져온다.
-      TweetRepositories);
+      TweetRepositories.getAllTweets());
   // 없다면 그냥 전체 트윗을 보여준다.
   return res.status(200).json(data);
 };
@@ -29,7 +29,7 @@ export const postTweet = async (req, res) => {
 
 export const deleteTweet = async (req, res) => {
   const id = req.params.id;
-  TweetRepositories = await TweetRepositories.removeTweet(id);
+  await TweetRepositories.removeTweet(id);
   return res.sendStatus(204);
 };
 
