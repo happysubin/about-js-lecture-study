@@ -20,7 +20,7 @@ export default class TweetService {
     const response = await fetch(`${this.baseURL}/tweets`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, username: "bin", name: "bin" }),
+      body: JSON.stringify({ text, username: "ellie", name: "Ellie" }),
     });
     const data = await response.json();
     if (response.status !== 201) {

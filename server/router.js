@@ -6,7 +6,7 @@ import {
   deleteTweet,
   putTweet,
   oneTweet,
-} from "./controller";
+} from "./controller/controller";
 
 const Router = express.Router();
 

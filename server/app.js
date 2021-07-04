@@ -11,12 +11,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const corsOptions = {
-  origin: "http://localhost:3000",
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use("/tweets", Router);
 
@@ -29,4 +24,4 @@ app.use((error, req, res, next) => {
   res.sendStatus(500);
 });
 
-app.listen("4000");
+app.listen("8080");
