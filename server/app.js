@@ -1,9 +1,10 @@
 import express from "express";
-import Router from "./router";
 import logger from "morgan";
 import helmet from "helmet";
 import cors from "cors";
 import "express-async-errors";
+import tweetRouter from "./router/tweetRouter";
+import authRouter from "./router/authRouter";
 
 const app = express();
 app.use(logger("dev"));
@@ -13,7 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 
-app.use("/tweets", Router);
+app.use("/tweets", tweetRouter);
+app.use("/auth", authRouter);
 
 app.use((req, res, next) => {
   res.sendStatus(404);

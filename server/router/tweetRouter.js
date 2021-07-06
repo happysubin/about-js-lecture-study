@@ -1,14 +1,14 @@
 import express from "express";
 import "express-async-errors";
 import { body } from "express-validator";
-import validator from "./middleware/validator";
+import validator from "../middleware/validator";
 import {
   allTweet,
   postTweet,
   deleteTweet,
   putTweet,
   oneTweet,
-} from "./controller/controller";
+} from "../controller/tweet";
 
 const Router = express.Router();
 

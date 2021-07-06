@@ -1,5 +1,5 @@
 import "express-async-errors";
-import * as TweetRepositories from "../model/model";
+import * as TweetRepositories from "../model/Tweets";
 
 export const allTweet = async (req, res) => {
   const username = req.query.username; //tweet?username=bob
