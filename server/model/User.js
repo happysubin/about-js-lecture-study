@@ -1,4 +1,6 @@
-let user = [
+import bcrypt from "bcrypt";
+
+let users = [
   {
     username: "bob",
     password: "1q2w3e4r",
@@ -7,3 +9,24 @@ let user = [
     url: "naverdaum.com",
   },
 ];
+
+export async function findByUsername(username) {
+  const user = users.find((t) => {
+    return t.username === username;
+  });
+  console.log(user);
+  return user;
+}
+
+export async function creatUser({ username, password, name, email, url }) {
+  const user = {
+    username,
+    password,
+    name,
+    email,
+    url,
+  };
+  console.log(user);
+  users.push(user);
+  return user;
+}

@@ -12,14 +12,17 @@ const validateLogin = [
   body("password")
     .trim()
     .isLength({ min: 8 })
-    .withMessage("passwor should be at least 5 characters"),
+    .withMessage("passwor should be at least 8 characters"),
   validator,
 ];
 
 const validateSignup = [
   ...validateLogin,
   body("name").notEmpty().withMessage("name is missing"),
-  body("url").isURL().withMessage("invalid URL"),
+  body("url").isURL().withMessage("invalid URL").optional({
+    nullable: true, //안적어도 괜찮
+    checkFalsy: false, //텅텅빈 문자도 허용
+  }),
   body("email").isEmail().withMessage("invalid email"),
   validator,
 ];
