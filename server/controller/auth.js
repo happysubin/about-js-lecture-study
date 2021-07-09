@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import * as userRepositories from "../model/User";
 
-const jwtSecretKey = "1q2w3e4r!@#$%^&*1(";
+const jwtSecretKey = "1q2w3e4r!@#$%^&*1";
 const jwtExpireDays = "2d";
 const bcryptRounds = 12;
 
@@ -38,7 +38,13 @@ export const userSignup = async (req, res) => {
   return res.status(200).json({ token, username });
 };
 
-export const getUser = (req, res) => {};
+export const getUser = async (req, res) => {
+  const user = await userRepositories.findById(req.userId);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  res.status(200).json({ token: req.token, username: user.username });
+};
 
 function createJWTToken(id) {
   return jwt.sign({ id }, jwtSecretKey, { expiresIn: jwtExpireDays });

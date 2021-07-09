@@ -18,15 +18,14 @@ export async function findByUsername(username) {
   return user;
 }
 
-export async function creatUser({ username, password, name, email, url }) {
-  const user = {
-    username,
-    password,
-    name,
-    email,
-    url,
-  };
-  console.log(user);
+export async function creatUser(newUser) {
+  const user = { ...newUser, id: Date.now().toString() };
   users.push(user);
   return user;
 }
+
+export const findById = async (id) => {
+  return users.find((user) => {
+    return user.id === id;
+  });
+};

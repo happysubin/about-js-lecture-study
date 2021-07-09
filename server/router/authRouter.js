@@ -2,6 +2,7 @@ import express from "express";
 import { userSignup, userLogin, getUser } from "../controller/auth";
 import { body, validationResult } from "express-validator";
 import validator from "../middleware/validator";
+import { isAuth } from "../middleware/auth";
 
 const authRouter = express.Router();
 const validateLogin = [
@@ -29,6 +30,6 @@ const validateSignup = [
 
 authRouter.post("/login", validateLogin, userLogin);
 authRouter.post("/signUp", validateSignup, userSignup);
-authRouter.get("/me", getUser);
+authRouter.get("/me", isAuth, getUser);
 
 export default authRouter;
