@@ -15,7 +15,7 @@ export const isAuth = async (req, res, next) => {
   }
   const token = authHeader.split(" ")[1]; //Bearer 이후 값을 가져와서 인덱스가 1. 띄어쓰기 주의하자
   console.log("token : ", token);
-  jwt.verify(token, "1q2w3e4r!@#$%^&*1", async (error, decoded) => {
+  jwt.verify(token, "1", async (error, decoded) => {
     if (error) {
       console.log(error);
       return res.status(402).json(Auth_Error);

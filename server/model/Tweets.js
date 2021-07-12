@@ -1,27 +1,8 @@
 import * as userRepositories from "./User";
 
-let tweets = [
-  {
-    id: "1",
-    text: "개발자 지망생들 파이팅!!!",
-    createdAt: new Date().toString(),
-    userId: "1",
-  },
-  {
-    id: "2",
-    text: "개발자 지망생들 파이팅!!!",
-    createdAt: new Date().toString(),
-    userId: "2",
-  },
-  {
-    id: "3",
-    text: "개발자 지망생들 파이팅!!!",
-    createdAt: new Date().toString(),
-    userId: "3",
-  },
-];
+let tweets = [];
 
-export function getAllTweets() {
+export async function getAllTweets() {
   return Promise.all(
     tweets.map(async (tweet) => {
       const { username, name, url } = await userRepositories.findById(

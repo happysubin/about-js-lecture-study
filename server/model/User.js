@@ -21,11 +21,10 @@ export async function findByUsername(username) {
 export async function creatUser(newUser) {
   const user = { ...newUser, id: Date.now().toString() }; //user id 가 존재하게 된다.
   users.push(user);
+  console.log("id : ", user.id);
   return user.id;
 }
 
-export const findById = async (id) => {
-  return users.find((user) => {
-    return user.id === id;
-  });
-};
+export async function findById(id) {
+  return users.find((user) => user.id === id);
+}
