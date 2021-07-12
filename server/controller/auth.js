@@ -9,6 +9,7 @@ const bcryptRounds = 12;
 export const userLogin = async (req, res) => {
   const { password, username } = req.body;
   const user = await userRepositories.findByUsername(username);
+  console.log(user);
   if (!user) {
     return res.status(401).json({ messageL: "Invalid user or paasword" });
   }
@@ -35,6 +36,7 @@ export const userSignup = async (req, res) => {
     url,
   });
   const token = createJWTToken(user);
+  console.log(token);
   return res.status(200).json({ token, username });
 };
 
