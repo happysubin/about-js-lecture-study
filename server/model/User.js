@@ -19,7 +19,7 @@ export async function findByUsername(username) {
 }
 
 export async function creatUser(newUser) {
-  const user = { ...newUser, id: Date.now().toString() };
+  const user = { ...newUser, id: Date.now().toString() }; //user id 가 존재하게 된다.
   users.push(user);
   return user;
 }

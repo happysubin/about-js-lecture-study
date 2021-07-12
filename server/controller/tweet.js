@@ -22,8 +22,8 @@ export const oneTweet = async (req, res) => {
 };
 
 export const postTweet = async (req, res) => {
-  const { username, name, text } = req.body;
-  const tweet = await TweetRepositories.createTweet(username, name, text);
+  const { text } = req.body;
+  const tweet = await TweetRepositories.createTweet(text, req.userId);
   res.status(201).json(tweet);
 };
 
@@ -33,10 +33,10 @@ export const deleteTweet = async (req, res) => {
   return res.sendStatus(204);
 };
 
-export const putTweet = (req, res) => {
+export const putTweet = async (req, res) => {
   const id = req.params.id;
   const text = req.body.text;
-  const tweet = TweetRepositories.updateTweet(id, text);
+  const tweet = await TweetRepositories.updateTweet(id, text);
   if (tweet) {
     return res.status(200).json(tweet);
   } else {
