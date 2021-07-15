@@ -28,21 +28,22 @@ const useInput = (initialValue, validator) => {
     } = event;
     let willUpdate = true;
     if (typeof validator === "function") {
-      willUpdate = validator(value);
+      willUpdate = validator(value);  // true or false
     }
     if (willUpdate) {
       setValue(value);
     }
   };
-
   return { value, onChange };
 };
+
 //value.include("@") 이걸 검사 @를 눌러도 동작하지 않는다
 const App = () => {
   const [item, setItem] = useState(1);
   //const item =useState(1)[0] || useState(1)[1];
   const incrementItem = () => setItem(item + 1);
   const decrementItem = () => setItem(item - 1);
+  
   const maxLen = (value) => value.length <= 10;
   const name = useInput("MR.", maxLen);
   console.log(name.value);
