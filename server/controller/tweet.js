@@ -29,6 +29,11 @@ export const postTweet = async (req, res) => {
 
 export const deleteTweet = async (req, res) => {
   const id = req.params.id;
+  const tweet = TweetRepositories.getTweetById(id);
+  if (!tweet) return res.sendStatus(404);
+  if (tweet.userId !== req.userId) {
+    return res.sendStatus(403);
+  }
   await TweetRepositories.removeTweet(id);
   return res.sendStatus(204);
 };
@@ -36,12 +41,14 @@ export const deleteTweet = async (req, res) => {
 export const putTweet = async (req, res) => {
   const id = req.params.id;
   const text = req.body.text;
-  const tweet = await TweetRepositories.updateTweet(id, text);
-  if (tweet) {
-    return res.status(200).json(tweet);
-  } else {
-    return res.status(404).json({ message: `Tweet id ${id} not found` });
+  const tweet = TweetRepositories.getTweetById(id); //업데이트 전에 해당 id를 가진 트윗을 찾는다
+  if (!tweet) return res.sendStatus(404); //해당 id를 가진 트윗이 없으면 실패
+  if (tweet.userId !== req.userId) {
+    //해당 트윗이 가진 유저아이디와 req에 담긴 유저아이디가 다르면 올리고 로그인한 유저가 다르므로 실패
+    return res.sendStatus(403);
   }
+  const updated = await TweetRepositories.updateTweet(id, text);
+  return res.status(200).json(updated);
 };
 
 //filter 는 조건을 통과한 요소들로 새로운 배열을 만든다
