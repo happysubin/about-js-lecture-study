@@ -29,8 +29,10 @@ export const postTweet = async (req, res) => {
 
 export const deleteTweet = async (req, res) => {
   const id = req.params.id;
-  const tweet = TweetRepositories.getTweetById(id);
+  const tweet = await TweetRepositories.getTweetById(id);
+  //여기에서 awiat를 빼 먹어 계속 오류가 발생했다. Promise { <pending> } 이라고 계속 출력되었다.
   if (!tweet) return res.sendStatus(404);
+
   if (tweet.userId !== req.userId) {
     return res.sendStatus(403);
   }
@@ -41,7 +43,8 @@ export const deleteTweet = async (req, res) => {
 export const putTweet = async (req, res) => {
   const id = req.params.id;
   const text = req.body.text;
-  const tweet = TweetRepositories.getTweetById(id); //업데이트 전에 해당 id를 가진 트윗을 찾는다
+  const tweet = await TweetRepositories.getTweetById(id); //업데이트 전에 해당 id를 가진 트윗을 찾는다
+  //여기도 await 를 빼먹어서 계속 오류가 발생했다.
   if (!tweet) return res.sendStatus(404); //해당 id를 가진 트윗이 없으면 실패
   if (tweet.userId !== req.userId) {
     //해당 트윗이 가진 유저아이디와 req에 담긴 유저아이디가 다르면 올리고 로그인한 유저가 다르므로 실패

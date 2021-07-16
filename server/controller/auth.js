@@ -4,12 +4,11 @@ import * as userRepositories from "../model/User";
 
 const jwtSecretKey = "1";
 const jwtExpireDays = "2d";
-const bcryptRounds = 12;
 
 export const userLogin = async (req, res) => {
   const { password, username } = req.body;
   const user = await userRepositories.findByUsername(username);
-  console.log(user);
+
   if (!user) {
     return res.status(401).json({ messageL: "Invalid user or paasword" });
   }
@@ -27,7 +26,10 @@ export const userSignup = async (req, res) => {
   if (found) {
     return res.status(409).json({ message: `${username} is already exists` });
   }
-  const hashed = await bcrypt.hash(password, bcryptRounds);
+  const hashed = await bcrypt.hash(
+    password,
+    parseInt(process.env.BCRYPT_SALT_ROUNDS)
+  );
   const userId = await userRepositories.creatUser({
     username,
     password: hashed,
@@ -50,5 +52,7 @@ export const getUser = async (req, res) => {
 };
 
 function createJWTToken(id) {
-  return jwt.sign({ id }, jwtSecretKey, { expiresIn: jwtExpireDays });
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: parseInt(process.env.JWT_EXPIRES_SEC),
+  });
 }
