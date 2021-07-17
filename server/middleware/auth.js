@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import * as userRepositories from "../model/User";
+import { config } from "../config";
 
 const Auth_Error = { message: "Authentication error" };
 
@@ -14,7 +15,7 @@ export const isAuth = async (req, res, next) => {
   }
   const token = authHeader.split(" ")[1]; //Bearer 이후 값을 가져와서 인덱스가 1. 띄어쓰기 주의하자
 
-  jwt.verify(token, process.env.JWT_SECRET, async (error, decoded) => {
+  jwt.verify(token, config.jwt.secretKey, async (error, decoded) => {
     if (error) {
       console.log(error);
       return res.status(402).json(Auth_Error);

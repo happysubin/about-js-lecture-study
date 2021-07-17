@@ -1,9 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import * as userRepositories from "../model/User";
-
-const jwtSecretKey = "1";
-const jwtExpireDays = "2d";
+import { config } from "../config";
 
 export const userLogin = async (req, res) => {
   const { password, username } = req.body;
@@ -28,7 +26,7 @@ export const userSignup = async (req, res) => {
   }
   const hashed = await bcrypt.hash(
     password,
-    parseInt(process.env.BCRYPT_SALT_ROUNDS)
+    parseInt(config.bcrypt.saltRounds)
   );
   const userId = await userRepositories.creatUser({
     username,
@@ -52,7 +50,7 @@ export const getUser = async (req, res) => {
 };
 
 function createJWTToken(id) {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: parseInt(process.env.JWT_EXPIRES_SEC),
+  return jwt.sign({ id }, config.jwt.secretKey, {
+    expiresIn: parseInt(config.jwt.expiresSec),
   });
 }

@@ -6,6 +6,7 @@ import "express-async-errors";
 import tweetRouter from "./router/tweetRouter";
 import authRouter from "./router/authRouter";
 import dotenv from "dotenv";
+import { config } from "./config";
 
 const app = express();
 dotenv.config();
@@ -30,4 +31,4 @@ app.use((error, req, res, next) => {
   res.sendStatus(500);
 });
 
-app.listen("8080");
+app.listen(config.host.port);
