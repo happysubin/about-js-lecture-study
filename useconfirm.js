@@ -21,7 +21,7 @@ const useConfirm = (message = "", callback, rejection) => {
 export default function App() {
   const deleteWorld = () => console.log("delete the world..");
   const abort = () => console.log("Aborted..");
-  const confirmData = useConfirm("Are you sure", deleteWorld, abort);
+  const confirmData = useConfirm("Are you sure", deleteWorld, abort); // 수행된 내부함수가 리턴된다.
   return (
     <div className="App">
       <button onClick={confirmData}>Delete the world</button>
