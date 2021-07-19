@@ -34,14 +34,15 @@ app.use((error, req, res, next) => {
 
 const server = app.listen(config.host.port);
 const socketIo = new Server(server, {
+  //서버는 소켓 패키지에서 제공해주는 모듈입니다
   cors: {
     origin: "*",
   },
 });
 
 socketIo.on("connection", (socket) => {
+  //소켓 연결 시
   console.log("client is here!");
   socket.emit("dwitter", "Hello");
   socket.emit("dwitter", "Hello");
 }); //
-//서버는 소켓 패키지에서 제공해주는 모듈입니다
