@@ -1,5 +1,6 @@
 import "express-async-errors";
 import * as TweetRepositories from "../model/Tweets";
+import { getSocketIO } from "../connection/socket";
 
 export const allTweet = async (req, res) => {
   const username = req.query.username; //tweet?username=bob
@@ -25,6 +26,7 @@ export const postTweet = async (req, res) => {
   const { text } = req.body;
   const tweet = await TweetRepositories.createTweet(text, req.userId);
   res.status(201).json(tweet);
+  getSocketIO().emit("tweets", tweet);
 };
 
 export const deleteTweet = async (req, res) => {
