@@ -8,6 +8,7 @@ import authRouter from "./router/authRouter";
 import dotenv from "dotenv";
 import { config } from "./config";
 import { initSocket } from "./connection/socket";
+import { db } from "./db/database";
 
 const app = express();
 dotenv.config();
@@ -32,5 +33,6 @@ app.use((error, req, res, next) => {
   res.sendStatus(500);
 });
 
+db.getConnection().then((connection) => console.log(connection));
 const server = app.listen(config.host.port);
 initSocket(server);
