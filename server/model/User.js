@@ -1,30 +1,32 @@
-import bcrypt from "bcrypt";
-
-let users = [
-  {
-    username: "bob",
-    password: "1q2w3e4r",
-    name: "bob",
-    email: "123@123",
-    url: "naverdaum.com",
-  },
-];
+import { db } from "../db/database";
 
 export async function findByUsername(username) {
-  const user = users.find((t) => {
-    return t.username === username;
-  });
-  console.log(user);
-  return user;
+  return db
+    .execute("SELECT * FROM users WHERE username=?", [username])
+    .then((result) => {
+      console.log("username", result[0][0]); //여기를 통해 진작에 username이 존재하는지 안하는 지 체크가능!
+      return result[0][0]; //그래서 undefined 를 return
+    });
+  //모든 필드를 선택. 그러나 조건이 있어 조건은 바로 인자로 들어온 username과 db 컬럼 username이 동일!
 }
 
-export async function creatUser(newUser) {
-  const user = { ...newUser, id: Date.now().toString() }; //user id 가 존재하게 된다.
-  users.push(user);
-  console.log("id : ", user.id);
-  return user.id;
+export async function creatUser(user) {
+  const { username, password, email, name, url } = user;
+  return db
+    .execute(
+      "INSERT INTO users (username, password, name, email, url) VALUES (?,?,?,?,?)",
+      [username, password, name, email, url]
+    )
+    .then((result) => {
+      return result[0].insertId;
+    });
+  //쿼리문을 전달한다. 넣을 만큼 괄호에 물음표를 쓰고 물음표에 해당하는 변수값을 2번째 인자에 배열로 넣는다
+  //id는 자동으로 생성됨 db 내부에서
 }
 
 export async function findById(id) {
-  return users.find((user) => user.id === id);
+  return db.execute("SELECT * FROM users WHERE id=?", [id]).then((result) => {
+    console.log("id", result[0][0]);
+    return result;
+  });
 }

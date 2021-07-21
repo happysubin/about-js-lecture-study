@@ -33,6 +33,6 @@ app.use((error, req, res, next) => {
   res.sendStatus(500);
 });
 
-db.getConnection().then((connection) => console.log(connection));
+db.getConnection().then((connection) => console.log("connect!"));
 const server = app.listen(config.host.port);
 initSocket(server);
