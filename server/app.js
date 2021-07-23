@@ -34,7 +34,6 @@ app.use((error, req, res, next) => {
 });
 
 sequelize.sync().then((client) => {
-  console.log(client);
   const server = app.listen(config.host.port);
   initSocket(server);
 });
