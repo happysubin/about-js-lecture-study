@@ -18,6 +18,7 @@ export async function creatUser(user) {
       [username, password, name, email, url]
     )
     .then((result) => {
+      console.log(result[0]);
       return result[0].insertId;
     });
   //쿼리문을 전달한다. 넣을 만큼 괄호에 물음표를 쓰고 물음표에 해당하는 변수값을 2번째 인자에 배열로 넣는다
@@ -26,7 +27,7 @@ export async function creatUser(user) {
 
 export async function findById(id) {
   return db.execute("SELECT * FROM users WHERE id=?", [id]).then((result) => {
-    console.log("id", result[0][0]);
+    console.log("id", result);
     return result[0][0];
   });
 }
