@@ -1,11 +1,10 @@
 import { db, sequelize } from "../db/database";
 import SQ from "sequelize";
-import { integer } from "check-types";
 
 const DataTypes = SQ.DataTypes;
 
 //자동으로 s 가붙어 users 라는 table 이 만들어진다. 스키마를 정의, 데이터 타입을 하나하나 정의해준다
-const User = sequelize.define(
+export const User = sequelize.define(
   "user",
   {
     id: {
@@ -15,6 +14,10 @@ const User = sequelize.define(
       primaryKey: true,
     },
     username: {
+      type: DataTypes.STRING(45),
+      allowNull: false,
+    },
+    name: {
       type: DataTypes.STRING(45),
       allowNull: false,
     },
@@ -65,7 +68,7 @@ export async function creatUser(user) {
 }
 
 export async function findById(id) {
-  return User.findById(id);
+  return User.findByPk(id); //findBy primary key 메소드이다
   /*
   return db.execute("SELECT * FROM users WHERE id=?", [id]).then((result) => {
     console.log("id", result);
