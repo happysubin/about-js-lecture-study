@@ -1,0 +1,1 @@
+(async()=>{alert("its working"),console.log("Hello world"),await fetch("")})();

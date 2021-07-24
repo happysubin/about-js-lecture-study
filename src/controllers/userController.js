@@ -8,6 +8,7 @@ import Video from "../models/Video";
 export const getEdit = (req, res) => {
   res.render("edit-profile", { pageTitle: "Edit profile" });
 };
+
 export const postEdit = async (req, res) => {
   const {
     session: {
