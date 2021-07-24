@@ -10,7 +10,9 @@ module.exports = {
     path: path.resolve(__dirname, "assets"), //파일을 어디에 저장할지 작성하는 부분! assets dir 안에 js dir 을 의미
     //1. path 를 작성할 당시 assets 라는 폴더가 없다
     //2. npm run assets 를 통해 assets js 폴더도 생기고 main.js 라는 파일도 자동으로 생겼다.
+    clean: true, //이걸로 시작할때마다 다 지우고 assets를 만들고 main.js 랑 main.css 도 다시 작성한다
   },
+  watch: true,
   plugins: [
     new MiniCssExtractPlugin({
       filename: "css/main.css",
@@ -40,3 +42,4 @@ module.exports = {
 };
 
 //path resolve 는 join 과 다르게 절대 경로로 인식하며 오른쪽부터 왼쪽으로 읽는다. /폴더명을 만나면 절대경로로 인식!!!
+//웹팩은 바닐라 자바스크립트로 작성해야한다!
