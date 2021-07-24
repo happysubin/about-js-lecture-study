@@ -22,6 +22,11 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"], //실행되는 역순으로 코드를 작성한다. 이유는 webpack은 뒤에서부터 시작하기 때문
+        //실상은 sass-loader 부터 실행된다
+      },
     ],
   },
 };
