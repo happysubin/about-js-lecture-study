@@ -26,6 +26,7 @@ app.use(
   })
 );
 app.use("/uploads", express.static("uploads"));
+app.use("/assets", express.static("assets")); //정적파일을 제공하자!
 app.use(localmiddlewares);
 app.use("/", globalRouter);
 app.use("/users", userRouter);
