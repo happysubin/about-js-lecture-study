@@ -1,0 +1,28 @@
+header          
+    h1=pageTitle
+    nav
+        ul
+            li
+                a(href="/").header_logo
+                    i.fab.fa-youtube
+            li
+                a(href="/search") Search 
+                    i.fas.fa-search
+                    
+                if loggedIn
+                    li  
+                        a(href="/users/logout") Logout
+                    li 
+                        a(href="/my-profile") My-Profile #{user.username}
+                    li 
+                        a(href="/users/edit") Edit Profile
+                    li
+                        a(href="/videos/upload") Upload Video
+                    li 
+                        a(href=`/users/${user._id}`) My Profile
+                        
+                else
+                    li
+                        a(href="/join").header__btn  Join
+                    li
+                        a(href="/login") Login

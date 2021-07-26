@@ -3,8 +3,7 @@ block content
     img(src="/" + user.avatarUrl, width="100", height="100")
     if errorMessage 
         span=errorMessage
-    form(method="POST" enctype="multipart/form-data")
-
+    form(method="POST" enctype="multipart/form-data").edit-profile__form
         label(for="avatar") Avatar
         input(type="file", id="avatar", name="avatar", accept="image/*")
         input(type="text" name="name" placeholder="Name" required value=user.name)
@@ -14,4 +13,5 @@ block content
         input(type="submit" value="Update profile")
         if !user.socialOnly
             hr
-            a(href="change-password") Change Password &rarr; 
+            div.edit-profile__password
+                a(href="change-password") Change Password &rarr; 

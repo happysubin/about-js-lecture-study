@@ -2,10 +2,8 @@ extends layout
 include mixins/video
 
 block content 
-     h2 Welcome here you will see the trending videos 
-     ul
+   div.video-grid
         each video in videos
-           +video(video)
-                    
+            +video(video)
         else
-            li there are no values
+            span.empty__message No videos found 
