@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native"; //이것들을 꼭 import 해야해!!!
+import { StyleSheet, Text, View, StatusBar } from "react-native"; //이것들을 꼭 import 해야해!!!
 
 export default function Loading() {
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="dark-content" />
       <Text style={styles.text}>Getting the nice Weather!!</Text>
     </View>
   );
