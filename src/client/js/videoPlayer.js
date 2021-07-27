@@ -3,6 +3,8 @@ const playBtn = document.getElementById("play");
 const muteBtn = document.getElementById("mute");
 const time = document.getElementById("time");
 const volumeRange = document.getElementById("volume");
+const currenTime = document.getElementById("currenTime");
+const totalTime = document.getElementById("totalTime");
 
 let volumeValue = 0.5;
 video.volume = volumeValue;
@@ -41,7 +43,24 @@ const handleVolume = (event) => {
   else muteBtn.innerText = "mute";
 };
 
+const formatTime = (seconds) =>
+  new Date(seconds * 1000).toISOString().substr(11, 8); //시간을 깔끔하게 보여주는 js trick
+//string 을 잘라내서 우리가 이용! 00:00::00 이 부분
+
+const handleLoadedMetadata = () => {
+  totalTime.innerText = formatTime(Math.floor(video.duration)); //비디오의 총시간을 가져온다
+};
+
+const handleTimeUpdate = () => {
+  currenTime.innerText = formatTime(Math.floor(video.currentTime));
+};
+
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolume);
 //input은 옮기기만 해도 값이 변하는데 ,change 는 드래그 한 후 놔야지 값이 변한다
+
+video.addEventListener("loadedmetadata", handleLoadedMetadata);
+//loadedmetadate 란 비디오에서 움직이는 이미지를 제외한 모든 데이터이다
+video.addEventListener("timeupdate", handleTimeUpdate);
+//시간이 흐르면 이벤트가 발생한다고 이해하면 편하다!
