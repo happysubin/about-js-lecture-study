@@ -1,12 +1,15 @@
 const video = document.querySelector("video");
 const playBtn = document.getElementById("play");
+const playBtnIcon = playBtn.querySelector("i");
 const muteBtn = document.getElementById("mute");
+const muteBtnIcon = muteBtn.querySelector("i");
 const time = document.getElementById("time");
 const volumeRange = document.getElementById("volume");
 const currenTime = document.getElementById("currenTime");
 const totalTime = document.getElementById("totalTime");
 const timeLine = document.getElementById("timeline");
 const fullScreenBtn = document.getElementById("fullScreen");
+const fullScreenIcon = fullScreenBtn.querySelector("i");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
 
@@ -22,7 +25,9 @@ const handleMute = (e) => {
   } else {
     video.muted = true;
   }
-  muteBtn.innerText = video.muted ? "Unmute" : "mute";
+  muteBtnIcon.classList = video.muted
+    ? "fas fa-volume-mute"
+    : "fas fa-volume-up";
   volumeRange.value = video.muted ? 0 : volumeValue; //저장된 이전 값을 가져온다
 }; //muteBtn을 누를 시
 
@@ -33,7 +38,7 @@ const handlePlayClick = (e) => {
   } else {
     video.pause();
   }
-  playBtn.innerText = video.paused ? "Play" : "Paused";
+  playBtnIcon.classList = video.paused ? "fas fa-play" : "fas fa-pause";
 }; //palyBtn을 누를 시
 
 const handleVolume = (event) => {
@@ -76,10 +81,10 @@ const handleFullscreen = () => {
   if (fullscreen) {
     //화면이 꽉찬 element가 있으면 true 없으면 false 를 return
     document.exitFullscreen(); //exit 는 doc 급에서 처리
-    fullScreenBtn.innerText = "Enter Full Screen";
+    fullScreenIcon.classList = "fas fa-expand";
   } else {
     videoContainer.requestFullscreen(); //div 지만 fullScreen을 만든다
-    fullScreenBtn.innerText = "Exit Full Screen";
+    fullScreenIcon.classList = "fas fa-compress";
   }
 };
 
@@ -107,20 +112,44 @@ const handleMouseLeave = () => {
   }, 3000);
 };
 
+const handleVideoClick = () => {
+  if (video.paused) {
+    video.play();
+  } else {
+    video.pause();
+  }
+};
+
+const handleSpace = (event) => {
+  console.log(event.code);
+  if (event.code === "Space") {
+    //스페이스바가 누르면 실행된다!!!
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
+};
+
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolume);
 //input은 옮기기만 해도 값이 변하는데 ,change 는 드래그 한 후 놔야지 값이 변한다
 
+videoContainer.addEventListener("mouseleave", handleMouseLeave);
+videoContainer.addEventListener("mousemove", handleMouseMove);
 video.addEventListener("loadedmetadata", handleLoadedMetadata);
 //loadedmetadate 란 비디오에서 움직이는 이미지를 제외한 모든 데이터이다
 video.addEventListener("timeupdate", handleTimeUpdate);
 //시간이 흐르면 이벤트가 발생한다고 이해하면 편하다!
+video.addEventListener("click", handleVideoClick);
 
 timeLine.addEventListener("input", handleTimeChange);
 //타임라인에 값을 변화시키면 비디오의 타임 라인도 변화해야한다!
 
 fullScreenBtn.addEventListener("click", handleFullscreen);
 //버튼으로 fullScreen을 관리
-video.addEventListener("mouseleave", handleMouseLeave);
-video.addEventListener("mousemove", handleMouseMove);
+
+window.addEventListener("keydown", handleSpace);
+//키가 눌리면 실행된다.
