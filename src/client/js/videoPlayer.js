@@ -6,6 +6,8 @@ const volumeRange = document.getElementById("volume");
 const currenTime = document.getElementById("currenTime");
 const totalTime = document.getElementById("totalTime");
 const timeLine = document.getElementById("timeline");
+const fullScreenBtn = document.getElementById("fullScreen");
+const videoContainer = document.getElementById("videoContainer");
 
 let volumeValue = 0.5;
 video.volume = volumeValue;
@@ -66,6 +68,18 @@ const handleTimeChange = (event) => {
   video.currentTime = value;
 };
 
+const handleFullscreen = () => {
+  const fullscreen = document.fullscreenElement;
+  if (fullscreen) {
+    //화면이 꽉찬 element가 있으면 true 없으면 false 를 return
+    document.exitFullscreen(); //exit 는 doc 급에서 처리
+    fullScreenBtn.innerText = "Enter Full Screen";
+  } else {
+    videoContainer.requestFullscreen(); //div 지만 fullScreen을 만든다
+    fullScreenBtn.innerText = "Exit Full Screen";
+  }
+};
+
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolume);
@@ -78,3 +92,6 @@ video.addEventListener("timeupdate", handleTimeUpdate);
 
 timeLine.addEventListener("input", handleTimeChange);
 //타임라인에 값을 변화시키면 비디오의 타임 라인도 변화해야한다!
+
+fullScreenBtn.addEventListener("click", handleFullscreen);
+//버튼으로 fullScreen을 관리

@@ -223,6 +223,11 @@ input[type=submit],
   font-size: 12px;
 }
 
+video {
+  height: 300px;
+  width: 300px;
+}
+
 form label {
   font-size: 14px;
   margin-bottom: 10px;

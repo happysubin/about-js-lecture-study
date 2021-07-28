@@ -1,29 +1,32 @@
 extends layout
 
 
-block content 
-    video(src="/" + video.fileUrl)
-    div 
-        button#play Play
-        button#mute Mute
-        input(type="range",step="0.1", value=0.5, min="0", max="1")#volume
-        div
-            span#currenTime 00:00
-            span  / 
-            span#totalTime 00:00
-        div
-            input(type="range",step="1", value="0", min="0")#timeline
-            //-max 는 비디오 전체길이라 설정 x
-    //-div
-        p=video.description
-        small=video.createdAt
-    //-div
-        small Uploaded by 
-            a(href=`/users/${video.owner._id}`)=video.owner.name
-    //-if String(video.owner._id) === String(user._id)
-        a(href=`${video.id}/edit`) Edit Video &rarr; 
-        br
-        a(href=`${video.id}/delete`) Delete Video &rarr; 
+block content
+    #videoContainer
+        video(src="/" + video.fileUrl)
+        div 
+            button#play Play
+            button#mute Mute
+            input(type="range",step="0.1", value=0.5, min="0", max="1")#volume
+            div
+                span#currenTime 00:00
+                span  / 
+                span#totalTime 00:00
+            div
+                input(type="range",step="1", value="0", min="0")#timeline
+            div
+                button#fullScreen Enter Full Screen
+                //-max 는 비디오 전체길이라 설정 x
+        //-div
+            p=video.description
+            small=video.createdAt
+        //-div
+            small Uploaded by 
+                a(href=`/users/${video.owner._id}`)=video.owner.name
+        //-if String(video.owner._id) === String(user._id)
+            a(href=`${video.id}/edit`) Edit Video &rarr; 
+            br
+            a(href=`${video.id}/delete`) Delete Video &rarr; 
 block scripts
     script(src="/assets/js/videoPlayer.js")
     //-assets url로 가면 assets 정적 파일을 담은 폴더에 접근할 수 있는 권한을 준다!
