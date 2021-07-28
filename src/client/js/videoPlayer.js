@@ -5,6 +5,7 @@ const time = document.getElementById("time");
 const volumeRange = document.getElementById("volume");
 const currenTime = document.getElementById("currenTime");
 const totalTime = document.getElementById("totalTime");
+const timeLine = document.getElementById("timeline");
 
 let volumeValue = 0.5;
 video.volume = volumeValue;
@@ -49,10 +50,20 @@ const formatTime = (seconds) =>
 
 const handleLoadedMetadata = () => {
   totalTime.innerText = formatTime(Math.floor(video.duration)); //비디오의 총시간을 가져온다
+  timeLine.max = Math.floor(video.duration);
+  //타임라인 총길이는 비디오의 길이와 동일!
 };
 
 const handleTimeUpdate = () => {
   currenTime.innerText = formatTime(Math.floor(video.currentTime));
+  timeLine.value = Math.floor(video.currentTime);
+};
+
+const handleTimeChange = (event) => {
+  const {
+    target: { value },
+  } = event;
+  video.currentTime = value;
 };
 
 playBtn.addEventListener("click", handlePlayClick);
@@ -64,3 +75,6 @@ video.addEventListener("loadedmetadata", handleLoadedMetadata);
 //loadedmetadate 란 비디오에서 움직이는 이미지를 제외한 모든 데이터이다
 video.addEventListener("timeupdate", handleTimeUpdate);
 //시간이 흐르면 이벤트가 발생한다고 이해하면 편하다!
+
+timeLine.addEventListener("input", handleTimeChange);
+//타임라인에 값을 변화시키면 비디오의 타임 라인도 변화해야한다!
