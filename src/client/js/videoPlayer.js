@@ -137,7 +137,7 @@ const handleSpace = (event) => {
 const handleEnded = () => {
   const { id } = videoContainer.dataset;
   //이 구문을 통해 html data-id 라고 data attribute를 이용해 저장한 data를 dataset을 통해 가져온다!!!
-  fetch(`/api/videos/${id}/views`, { method: "POST" }); //일일이 localhost를 쓸 이유 없다.
+  fetch(`/api/videos/${id}/view`, { method: "POST" }); //일일이 localhost를 쓸 이유 없다.
   //프론트엔드에서는 id를 알지 못해. 그래서 렌더링하는 페이지에서 data를 가져와야한다
 };
 
