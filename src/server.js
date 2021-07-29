@@ -6,6 +6,7 @@ import videoRouter from "./routers/videoRouter";
 import session from "express-session";
 import mongoStore from "connect-mongo";
 import { localmiddlewares } from "./middlewares";
+import apiRouter from "./routers/apiRouter";
 
 const app = express();
 const logger = morgan("dev");
@@ -31,6 +32,7 @@ app.use(localmiddlewares);
 app.use("/", globalRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
+app.use("/api", apiRouter);
 
 export default app;
 

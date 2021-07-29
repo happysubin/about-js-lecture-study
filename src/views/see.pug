@@ -1,8 +1,11 @@
 extends layout
 
 
-block content
-    #videoContainer
+//- 우리가 직접 데이터를 만들어서 html에 저장하고 그 데이터를 js에게 넘기자!
+//-data attribute를 이용  ex data-id , data-name. 이것을 이용해 js가 쉽게 접근!!!
+
+block content                                                   
+    div#videoContainer(data-id=video._id)  
         video(src="/" + video.fileUrl)
         div#videoControls.videoControls
             div.videoControls__play

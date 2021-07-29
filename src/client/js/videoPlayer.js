@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 const video = document.querySelector("video");
 const playBtn = document.getElementById("play");
 const playBtnIcon = playBtn.querySelector("i");
@@ -132,6 +134,13 @@ const handleSpace = (event) => {
   }
 };
 
+const handleEnded = () => {
+  const { id } = videoContainer.dataset;
+  //이 구문을 통해 html data-id 라고 data attribute를 이용해 저장한 data를 dataset을 통해 가져온다!!!
+  fetch(`/api/videos/${id}/views`, { method: "POST" }); //일일이 localhost를 쓸 이유 없다.
+  //프론트엔드에서는 id를 알지 못해. 그래서 렌더링하는 페이지에서 data를 가져와야한다
+};
+
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolume);
@@ -144,6 +153,9 @@ video.addEventListener("loadedmetadata", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
 //시간이 흐르면 이벤트가 발생한다고 이해하면 편하다!
 video.addEventListener("click", handleVideoClick);
+//비디오 클릭하면 멈춘다!
+video.addEventListener("ended", handleEnded);
+//시청을 완료하면 조회수를 올려버리자!!!!
 
 timeLine.addEventListener("input", handleTimeChange);
 //타임라인에 값을 변화시키면 비디오의 타임 라인도 변화해야한다!
@@ -152,4 +164,4 @@ fullScreenBtn.addEventListener("click", handleFullscreen);
 //버튼으로 fullScreen을 관리
 
 window.addEventListener("keydown", handleSpace);
-//키가 눌리면 실행된다.
+//키가 눌리면 멈춘다 .실행 키는 스페이스바

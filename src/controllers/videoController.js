@@ -128,3 +128,14 @@ export const postUpload = async (req, res) => {
     },
   });
   await video.save(); //이게 db에 저장 , 저장하는걸 기다려줘야하므로 await*/
+
+export const registerView = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  video.meta.views = video.meta.views + 1; //우리 video 스키마에 meta.views라는 프로퍼티가 있다.
+  await video.save();
+  return res.sendStatus(200);
+};
