@@ -7,3 +7,5 @@ REACT를 연습을 위해 시작!!!!
 5. 파일이름.module.css 면 css를 global아닌 local하게 적용시킬 수 있다.!!! 물론 create-react-app으로 시작한 프로젝트 한도 내에서
 6. Link를 Router 밖에 쓰면 안된다.
 7. styled-reset은 sc를 이용해서 css를 초기화시켜 깨끗한 상태에서 시작
+8. withRouter는 다른 컴포넌트를 감싸는 컴포넌트이다
+9. Router을 사용시 각각의 Route props에서 match, location, history라는 객체를 받는다. (history api)에 접근!
