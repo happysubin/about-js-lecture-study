@@ -1,10 +1,12 @@
+import React from "react";
 import Router from "Components/Router";
-import Header from "Components/Header"; //이 형태는 기본적으로 folder로 가서 index 파일을 보여준다
+import GlobalStyles from "Components/globalStyles";
 
 function App() {
   return (
     <>
       <Router />
+      <GlobalStyles />
     </>
   );
 }
