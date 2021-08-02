@@ -4,7 +4,6 @@ import Header from "Components/Header"; //이 형태는 기본적으로 folder�
 function App() {
   return (
     <>
-      <Header />
       <Router />
     </>
   );
