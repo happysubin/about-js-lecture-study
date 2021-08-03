@@ -1,8 +1,43 @@
 const startBtn = document.getElementById("startBtn");
 const video = document.getElementById("preview");
 
-const handleStart = async () => {
-  const stream = await navigator.mediaDevices.getUserMedia({
+let stream;
+let recorder;
+
+const handleDownload = () => {};
+
+const handleStop = () => {
+  startBtn.innerText = "Download Recording";
+  startBtn.removeEventListener("click", handleStop);
+  startBtn.addEventListener("click", handleDownload);
+  recorder.stop();
+};
+
+const handleStart = () => {
+  startBtn.innerText = "Stop Recording";
+  startBtn.removeEventListener("click", handleStart);
+  startBtn.addEventListener("click", handleStop);
+  //mediaRecorder은 비디오, 오디오 녹화가능!!!
+  recorder = new MediaRecorder(stream);
+  recorder.ondataavailable = (event) => {
+    //이 이벤트는 최종 비디오 파일과 함께 나온다
+    //ondataaavailable
+    //console.log(event)
+    const videoFile = URL.createObjectURL(event.data); //브라우저 메모리에서만 가능한 url을 만들어준다. 즉 브라우저의 메모리를 가리키는 url이다! 대충 파일을 가리킨다고 생각!
+    console.log(video);
+    video.srcObject = null;
+    video.src = videoFile; //video url을 설정
+    video.loop = true; //비디오 반복재생
+    video.play();
+  };
+
+  recorder.start();
+
+  //setTimeout(() => recorder.stop(), 10000); //10초 뒤 녹화 종료
+};
+
+const init = async () => {
+  stream = await navigator.mediaDevices.getUserMedia({
     //사용자의 네비게이터에서 비디오와 오디오를 가져온다. promise 나 async await을 사용!!!
     audio: false,
     video: true,
@@ -14,6 +49,7 @@ const handleStart = async () => {
   video.play();
 };
 
+init();
 startBtn.addEventListener("click", handleStart);
 
 //프론트엔드에서 async await을 쓰려면 regenerator-runtime을 인소톨 해야한다1!! promise (then catch)는 그냥 사용가능!!
