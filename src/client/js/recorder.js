@@ -3,8 +3,15 @@ const video = document.getElementById("preview");
 
 let stream;
 let recorder;
+let videoFile;
 
-const handleDownload = () => {};
+const handleDownload = () => {
+  const a = document.createElement("a"); //링크를 만듬
+  a.href = videoFile;
+  a.download = "MyRecording.webm"; //다운로드를 시킨다.
+  document.body.appendChild(a); //body 안에 a태그를 추가
+  a.click(); //사용자가 클릭을 누른것처럼 작동
+};
 
 const handleStop = () => {
   startBtn.innerText = "Download Recording";
@@ -18,12 +25,12 @@ const handleStart = () => {
   startBtn.removeEventListener("click", handleStart);
   startBtn.addEventListener("click", handleStop);
   //mediaRecorder은 비디오, 오디오 녹화가능!!!
-  recorder = new MediaRecorder(stream);
+  recorder = new MediaRecorder(stream, { mimeType: "video/webm" }); //"video/mp4"이렇게 설정하면 mp4로 컴퓨터에 저장된다.
   recorder.ondataavailable = (event) => {
     //이 이벤트는 최종 비디오 파일과 함께 나온다
     //ondataaavailable
     //console.log(event)
-    const videoFile = URL.createObjectURL(event.data); //브라우저 메모리에서만 가능한 url을 만들어준다. 즉 브라우저의 메모리를 가리키는 url이다! 대충 파일을 가리킨다고 생각!
+    videoFile = URL.createObjectURL(event.data); //브라우저 메모리에서만 가능한 url을 만들어준다. 즉 브라우저의 메모리를 가리키는 url이다! 대충 파일을 가리킨다고 생각!
     console.log(video);
     video.srcObject = null;
     video.src = videoFile; //video url을 설정
