@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     main: "./src/client/js/main.js",
     videoPlayer: "./src/client/js/videoPlayer.js",
+    recorder: "./src/client/js/recorder.js",
     //스크립트 태그가 layout.pug 에 있는데 메인화면은 비디오도 안돌리는데 비디오 관련 js 코드를 가져올 이유가 없다!
   },
   // 소스코드들을 모아둔 폴더를 엔트리라고 칭한다!

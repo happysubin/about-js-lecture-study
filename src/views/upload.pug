@@ -1,8 +1,8 @@
 extends layout
 
 block content
- 
-    
+    div
+        button#startBtn Start Recording
     form(method="POST", enctype="multipart/form-data")
         label(for="video") Video File
         input(type="file", accept="video/*", required, id="video", name="video")
@@ -10,4 +10,5 @@ block content
         input(placeholder="Descriptions", required, name="description" type="text" minlength=20)
         input(placeholder="Hashtags, separated by comma", required, name="hashtags" type="text")
         input(type="submit", value="Upload Video")
-    
+block scripts
+    script(src="/assets/js/recorder.js")
