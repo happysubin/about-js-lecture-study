@@ -1,4 +1,14 @@
 extends layout/layout.pug
 
 block content 
-    h1 video Detail
+    h1=video.title
+    h3=video.description
+    h4=video.createdAt
+    each hashtag in video.hashtags
+        ul 
+            li=hashtag 
+    
+    a(href=`/video/${video.id}/delete`)
+        button Delete video
+    a(href=`/video/${video.id}/edit`)
+        button Edit video

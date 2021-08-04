@@ -1,4 +1,10 @@
 extends layout/layout.pug
 
 block content 
-    h1 edit Video
+    h1 Edit Video
+    form(method="post")
+        input(type="text" name="title" placeholder="title" required value=video.title)
+        input(type="text" name="description" placeholder="description" required value=video.description)
+        input(type="text" name="hashtags" placeholder="hashtags" required value=video.hashtags.join())
+        input(type="submit" value="Save")
+

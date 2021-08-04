@@ -1,0 +1,12 @@
+mixin video(video)
+    div
+        a(href=`/video/${video.id}`)
+            h1=video.title
+            p=video.description
+            h4=video.createdAt
+            hr
+
+
+
+
+//-home 에서 비디오를 보여준다.  
