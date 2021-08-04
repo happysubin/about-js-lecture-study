@@ -9,3 +9,7 @@ REACT를 연습을 위해 시작!!!!
 7. styled-reset은 sc를 이용해서 css를 초기화시켜 깨끗한 상태에서 시작
 8. withRouter는 다른 컴포넌트를 감싸는 컴포넌트이다
 9. Router을 사용시 각각의 Route props에서 match, location, history라는 객체를 받는다. (history api)에 접근!
+10. 리액트에서 컨테이너와 프리젠터 패턴!!
+    컨테이너 : data와 state(상태값)를 가지고, api를 호출, 기타 모든 로직들을 처리.
+    프리젠터 : 컨테이너가 처리한 데이터들을 화면에 뿌려주는 역할을 하는 함수형 컴포넌트
+    프리젠터는 state(상태값), api, 클래스 등을 다루지 않음. (state가 없으니 당연히 클래스도 다루지 않는다.)
