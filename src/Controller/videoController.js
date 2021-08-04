@@ -1,57 +1,61 @@
-let id = 1;
-let videos = [
-  {
-    id,
-    title: "example",
-    createdAt: Date.now(),
-    description: "first video",
-    hashtags: ["1", "3"],
-  },
-];
+import Video from "../Model/Video";
 
 export const getUpload = (req, res) => {
   return res.render("upload");
 };
 
-export const postUpload = (req, res) => {
+export const postUpload = async (req, res) => {
   const { title, description, hashtags } = req.body;
-  videos.push({
-    id: ++id,
+  await Video.create({
     title,
-    createdAt: Date.now(),
     description,
     hashtags: hashtags.split(",").map((ele) => `#${ele}`),
   });
+
   return res.redirect("/");
 };
 
-export const deleteVideo = (req, res) => {
+export const deleteVideo = async (req, res) => {
   const { id } = req.params;
-  videos = videos.filter((video) => JSON.stringify(video.id) !== id);
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.status(404).json("no video");
+  }
+  await Video.findByIdAndDelete(id);
   return res.redirect("/");
 };
 
-export const getEditVideo = (req, res) => {
+export const getEditVideo = async (req, res) => {
   const { id } = req.params;
-  const video = videos.find((video) => JSON.stringify(video.id) === id);
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.status(404).json("no video");
+  }
+
   return res.render("editVideo", { video });
 };
 
-export const postEditVideo = (req, res) => {
+export const postEditVideo = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
-  videos[id - 1].title = title; // 업데이트
-  videos[id - 1].description = description; // 업데이트
-  videos[id - 1].hashtags = hashtags
-    .split(",")
-    .map((element) => (element.startsWith("#") ? element : `#${element}`));
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.status(404).json("no video");
+  }
+  await Video.findByIdAndUpdate(id, {
+    title,
+    description,
+    hashtags: hashtags
+      .split(",")
+      .map((element) => (element.startsWith("#") ? element : `#${element}`)),
+  });
+
   return res.redirect(`/video/${id}`);
 };
 
-export const videoDetail = (req, res) => {
+export const videoDetail = async (req, res) => {
   const { id } = req.params;
-  const video = videos.find((video) => JSON.stringify(video.id) === id);
-  //객체 내부 id 와 req.params 의 타입이 달랐따! 문자열로 통일해서 검사하자!!!
+  const video = await Video.findById(id);
   if (!video) {
     console.log("there is no video");
     return res.status(404);
@@ -63,6 +67,7 @@ export const search = (req, res) => {
   return res.render("search");
 };
 
-export const home = (req, res) => {
+export const home = async (req, res) => {
+  const videos = await Video.find();
   return res.render("home", { videos });
 };
