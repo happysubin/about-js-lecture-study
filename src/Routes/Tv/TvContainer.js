@@ -3,19 +3,19 @@ import TvPresenter from "./TvPresenter";
 
 export default class TvContainer extends React.Component {
   state = {
-    nowPlaying: null,
-    upcoming: null,
+    topRated: null,
     popular: null,
-    error: null,
+    airingToday: null,
     loading: true,
+    error: null,
   };
-  redner() {
-    const { nowPlaying, upcoming, popular, error, loading } = this.state;
-
+  render() {
+    const { topRated, airingToday, popular, error, loading } = this.state;
     return (
+      //tv api 메소드를 가져온다
       <TvPresenter
-        nowPlaying={nowPlaying}
-        upcoming={upcoming}
+        topRated={topRated}
+        airingToday={airingToday}
         popular={popular}
         error={error}
         loading={loading}
