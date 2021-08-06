@@ -56,3 +56,4 @@ export default withRouter(({ location: { pathname } }) => (
   </Header>
 ));
 //sc (styled components) 에게 props를 줄 수 있다.
+//Router가 route들에게 props 를 준다. 따라서 location,history 같은 prop 사용가능!
