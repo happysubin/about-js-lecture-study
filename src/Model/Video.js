@@ -5,6 +5,7 @@ const videoSchema = mongoose.Schema({
   created: { type: Date, required: true, default: Date.now, trim: true }, //trim은 문자열 양 끝에 띄어쓰기를 삭제해준다
   description: { type: String, required: true, trim: true },
   hashtags: [{ type: String }],
+  date: { type: Date, default: Date.now },
 });
 
 const Video = mongoose.model("Video", videoSchema);

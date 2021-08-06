@@ -1,4 +1,10 @@
 extends layout/layout.pug
 
 block content 
+    if errorMessage 
+        span=errorMessage
     h1 login
+    form(method="post")
+        input(type="text" required placeholder="username" name="username")
+        input(type="password" required placeholder="password" name="password")
+        input(type="submit" placeholder="Sign up!")
