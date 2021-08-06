@@ -9,6 +9,7 @@ import Home from "Routes/Home";
 import Tv from "Routes/Tv";
 import Search from "Routes/Search";
 import Header from "Components/Header"; //이 형태는 기본적으로 folder로 가서 index 파일을 보여준다
+import Detail from "Routes/Detail";
 
 export default () => {
   return (
@@ -18,6 +19,8 @@ export default () => {
         <Route path="/" exact component={Home} />
         <Route path="/tv" component={Tv} />
         <Route path="/search" component={Search} />
+        <Route path="/movie/:id" components={Detail} />
+        <Route path="/tv/:id" components={Detail} />
         <Redirect from="*" to="/" />
       </Switch>
     </Router>
