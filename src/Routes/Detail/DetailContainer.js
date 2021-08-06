@@ -32,19 +32,6 @@ export default class DetailContainer extends React.Component {
       return push("/"); // home으로 돌려보낸다
       //history.push 는 path를 이용해 원하는 컴포넌트로 이동한다.
     }
-    let result = null;
-    try {
-      if (isMovie) {
-        ({ data: result } = await moviesApi.movieDetail(parsedId));
-      } else {
-        ({ data: result } = await tvApi.showDetail(parsedId));
-      }
-    } catch {
-      this.setState({ error: "Can't find anything." });
-    } finally {
-      console.log(result, "result");
-      this.setState({ loading: false, result });
-    }
   }
   render() {
     const { result, error, loading } = this.state;
