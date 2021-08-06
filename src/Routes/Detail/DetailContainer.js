@@ -25,26 +25,11 @@ export default class DetailContainer extends React.Component {
       },
       history: { push },
     } = this.props;
-    const { isMovie } = this.state;
     const parsedId = parseInt(id); //id type이 string이라 number로 캐스팅한다.
     if (isNaN(parsedId)) {
       //ex id에 문자열이 들어와서 number로 캐스팅되다 실패하면 NAN이 된다. not a number라는 뜻이다
       return push("/"); // home으로 돌려보낸다
       //history.push 는 path를 이용해 원하는 컴포넌트로 이동한다.
-    }
-    let result = null;
-    try {
-      if (isMovie) {
-        const request = await moviesApi.movieDetail(parsedId);
-        result = request.data;
-      } else {
-        const request = await tvApi.showDetail(parsedId);
-        result = request.data;
-      }
-    } catch {
-      this.setState({ error: "Can't find anything." });
-    } finally {
-      this.setState({ loading: false, result });
     }
   }
   render() {
