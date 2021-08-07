@@ -2,10 +2,6 @@ header
     nav
         a(href="/")
             h4 Home 
-        a(href="/signUp") 
-            h4 sign up
-        a(href="/login") 
-            h4 Login
         if loggedIn
             a(href="/video/upload") 
                 h4 upload
@@ -13,3 +9,9 @@ header
                 h4 logout
             a(href="/user/edit-profile")
                 h4 edit-profile
+        else 
+            a(href="/signUp") 
+                h4 sign up
+            a(href="/login") 
+                h4 Login
+

@@ -9,7 +9,30 @@ export const getChangepassword = (req, res) => {
   return res.render("changePassword");
 };
 
-export const postChangepassword = (req, res) => {};
+export const postChangepassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { originPassword, changePassword, checkChangePassword },
+  } = req;
+  const user = await User.findById(_id);
+  const check = await bcrypt.compare(originPassword, user.password);
+  if (!check) {
+    return res.render("changePassword", {
+      errorMessage: "wrong origin password",
+    });
+  }
+  if (changePassword !== checkChangePassword) {
+    return res.render("changePassword", {
+      errorMessage:
+        "Two passwords (changepassword, check change password) are different.",
+    });
+  }
+  const newPassword = await bcrypt.hash(changePassword, 10);
+  await User.findByIdAndUpdate(_id, { password: newPassword });
+  return res.redirect("/");
+};
 
 export const getEditProfile = (req, res) => {
   return res.render("editProfile");
@@ -18,15 +41,20 @@ export const getEditProfile = (req, res) => {
 export const postEditProfile = async (req, res) => {
   const {
     session: {
-      user: { _id },
+      user: { _id, username: checkUsername, emial: checkEmail },
     },
     body: { username, name, location, email },
   } = req;
 
   const user = await User.exists({
-    email: { $ne: email },
-    username: { $ne: username },
+    $or: [{ email }, { username }],
   });
+
+  if (checkUsername === username || email === checkEmail) {
+    return res.render("editProfile", {
+      errorMessage: "There is no change.",
+    });
+  }
   if (user) {
     return res.render("editProfile", {
       errorMessage: "That username or The email is in use.",
@@ -52,7 +80,9 @@ export const deleteUser = async (req, res) => {
       user: { _id },
     },
   } = req;
+
   await User.findOneAndDelete(_id);
+  req.session.destroy();
   return res.send("delete");
 };
 
