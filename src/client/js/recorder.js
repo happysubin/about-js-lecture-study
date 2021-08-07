@@ -20,8 +20,23 @@ const handleDownload = async () => {
   //i 는 input 이미 존재하는 recording.webm 파일을 input으로 받는다. 변환되어서 output.mp4로 나온다. 다른 명령어 의미는 초당 60프레임으로 인코딩해주는 명령어다
   //브라우저에서 ffempg를 사용해서 콘솔창에서 명령어를 치는게 아니다. 그래서 브라우저에서 명령을 입력해서 작동시키자.
   //콘솔창에 치는 명령어를 브라우저에서 실시한다고 생각하면 간단하다(리눅스처럼!!)
+  await ffmpeg.run(
+    "-i",
+    "recording.webm",
+    "-ss",
+    // -ss 명령어와 뒤의 시간을 통해 01초의 장면을 가져온다.
+    "00:00:01",
+    "-frames:v",
+    "1",
+    "thumbnail.jpg"
+  ); // -frames :v 1 을 이용해 이동한 장면의 스크린샷을 찍는다. 그 스크린샷의 이름은 thumbnail.jpg. 물론 FS 시스템 메모리에 만들어진다
   const mp4File = ffmpeg.FS("readFile", "output.mp4"); //outpur.mp4 파일을 읽는다.
-  const mp4Blob = new Blob([mp4File.buffer, { type: "video/mp4" }]);
+  const thumbFile = ffmpeg.FS("readFile", "thumbnail.jpg");
+
+  const mp4Blob = new Blob([mp4File.buffer], { type: "video/mp4" });
+  const thumbBlob = new Blob([thumbFile.buffer], { type: "image/jpg" });
+
+  const thumbUrl = URL.createObjectURL(thumbBlob);
   const mp4Url = URL.createObjectURL(mp4Blob);
   //Binary Large Object :blob  Butter는 우리 영상을 나타내는 byte의 배열!
   //mdn-BLOB은 일반적으로 그림, 오디오, 또는 기타 멀티미디어 오브젝트인 것이 보통이지만, 바이너리 실행 코드가 BLOB으로 저장되기도 한다
@@ -31,6 +46,12 @@ const handleDownload = async () => {
   a.download = "MyRecording.mp4"; //다운로드를 시킨다.
   document.body.appendChild(a); //body 안에 a태그를 추가
   a.click(); //사용자가 클릭을 누른것처럼 작동
+
+  const thumbA = document.createElement("a");
+  thumbA.href = thumbUrl;
+  thumbA.download = "MyThumbnail.jpg";
+  document.body.appendChild(thumbA);
+  thumbA.click();
 };
 
 const handleStop = () => {
