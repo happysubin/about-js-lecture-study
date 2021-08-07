@@ -1,3 +1,5 @@
+import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
+
 const startBtn = document.getElementById("startBtn");
 const video = document.getElementById("preview");
 
@@ -5,7 +7,20 @@ let stream;
 let recorder;
 let videoFile;
 
-const handleDownload = () => {
+const handleDownload = async () => {
+  const ffmpeg = createFFmpeg({
+    log: true,
+    corePath: "/assets/ffmpeg-core.js",
+  }); // 무슨일이 일어나는지 check를 위해 log값을 true로
+  await ffmpeg.load(); //프로그램 사용 시작한다는 뜻
+
+  ffmpeg.FS("writeFile", "recording.webm", await fetchFile(videoFile));
+  //ffmpeg에서 파일을 하나 만든다. 마지막 인자는 이진 데이터를 가져와야해
+  await ffmpeg.run("-i", "recording.webm", "-r", "60", "output.mp4");
+  //i 는 input 이미 존재하는 recording.webm 파일을 input으로 받는다. 변환되어서 output.mp4로 나온다. 다른 명령어 의미는 초당 60프레임으로 인코딩해주는 명령어다
+  //브라우저에서 ffempg를 사용해서 콘솔창에서 명령어를 치는게 아니다. 그래서 브라우저에서 명령을 입력해서 작동시키자.
+  //콘솔창에 치는 명령어를 브라우저에서 실시한다고 생각하면 간단하다(리눅스처럼!!)
+
   const a = document.createElement("a"); //링크를 만듬
   a.href = videoFile;
   a.download = "MyRecording.webm"; //다운로드를 시킨다.
@@ -31,7 +46,7 @@ const handleStart = () => {
     //ondataaavailable
     //console.log(event)
     videoFile = URL.createObjectURL(event.data); //브라우저 메모리에서만 가능한 url을 만들어준다. 즉 브라우저의 메모리를 가리키는 url이다! 대충 파일을 가리킨다고 생각!
-    console.log(video);
+    //이 url을 통해 파일 참조가능. videoFile은 blob이다
     video.srcObject = null;
     video.src = videoFile; //video url을 설정
     video.loop = true; //비디오 반복재생

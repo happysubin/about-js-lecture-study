@@ -5,12 +5,14 @@ import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import session from "express-session";
 import mongoStore from "connect-mongo";
+import cors from "cors";
 import { localmiddlewares } from "./middlewares";
 import apiRouter from "./routers/apiRouter";
 
 const app = express();
 const logger = morgan("dev");
 
+app.use(cors());
 app.set("views", process.cwd() + "/src/views"); //현재작업죽인 디렉토리pwd + src/views
 app.set("view engine", "pug"); //view engine 을 pug로 설정
 app.use(express.urlencoded({ extended: true })); //이걸 통해 req.body 사용가능
@@ -27,7 +29,12 @@ app.use(
   })
 );
 app.use("/uploads", express.static("uploads"));
-app.use("/assets", express.static("assets")); //정적파일을 제공하자!
+app.use(
+  "/assets",
+  express.static("assets"),
+  express.static("node_modules/@ffmpeg/core/dist")
+); //정적파일을 제공하자!
+
 app.use(localmiddlewares);
 app.use("/", globalRouter);
 app.use("/users", userRouter);
