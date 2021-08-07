@@ -91,12 +91,15 @@ export const postUpload = async (req, res) => {
       user: { _id },
     },
     body: { title, description, hashtags },
-    file: { path: fileUrl },
+    //multer 에서 single이 아니라 fields를 사용하면 req.files 로 바뀐다. req.file은 single 일 때!
   } = req;
+  const { video, thumb } = req.files; //video thumb 모두 배열로 출력된다.
+  console.log(video, thumb);
 
   try {
     const newVideo = await Video.create({
-      fileUrl,
+      fileUrl: video[0].path,
+      thumbUrl: thumb[0].destination + "/" + thumb[0].filename,
       title,
       description,
       owner: _id,

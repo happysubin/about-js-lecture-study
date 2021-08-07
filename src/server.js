@@ -12,7 +12,13 @@ import apiRouter from "./routers/apiRouter";
 const app = express();
 const logger = morgan("dev");
 
-app.use(cors());
+app.use((req, res, next) => {
+  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  next();
+});
+//https://developer.chrome.com/blog/enabling-shared-array-buffer/ 오류를 위한 참고 링크
+
 app.set("views", process.cwd() + "/src/views"); //현재작업죽인 디렉토리pwd + src/views
 app.set("view engine", "pug"); //view engine 을 pug로 설정
 app.use(express.urlencoded({ extended: true })); //이걸 통해 req.body 사용가능

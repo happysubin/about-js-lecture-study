@@ -85,9 +85,10 @@ const handleStop = () => {
 };
 
 const handleStart = () => {
-  actionBtn.innerText = "Stop Recording";
+  actionBtn.innerText = "Recording";
+  actionBtn.disabled = true;
   actionBtn.removeEventListener("click", handleStart);
-  actionBtn.addEventListener("click", handleStop);
+
   //mediaRecorder은 비디오, 오디오 녹화가능!!!
   recorder = new MediaRecorder(stream, { mimeType: "video/webm" }); //"video/mp4"이렇게 설정하면 mp4로 컴퓨터에 저장된다.
   recorder.ondataavailable = (event) => {
@@ -100,10 +101,15 @@ const handleStart = () => {
     video.src = videoFile; //video url을 설정
     video.loop = true; //비디오 반복재생
     video.play();
+    actionBtn.innerText = "Download";
+    actionBtn.disabled = false;
+    actionBtn.addEventListener("click", handleDownload);
   };
 
   recorder.start();
-
+  setTimeout(() => {
+    recorder.stop();
+  }, 5000);
   //setTimeout(() => recorder.stop(), 10000); //10초 뒤 녹화 종료
 };
 
@@ -111,7 +117,10 @@ const init = async () => {
   stream = await navigator.mediaDevices.getUserMedia({
     //사용자의 네비게이터에서 비디오와 오디오를 가져온다. promise 나 async await을 사용!!!
     audio: false,
-    video: true,
+    video: {
+      width: 1024,
+      height: 576,
+    },
   });
   video.srcObject = stream; //비디오 내부 srcObject객체에 stream 값을 할당
   //htmlMediaelement.srcObject를 이용해 프리뷰를 보는게 가능하다
