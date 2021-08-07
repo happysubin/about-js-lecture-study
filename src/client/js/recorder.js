@@ -20,10 +20,15 @@ const handleDownload = async () => {
   //i 는 input 이미 존재하는 recording.webm 파일을 input으로 받는다. 변환되어서 output.mp4로 나온다. 다른 명령어 의미는 초당 60프레임으로 인코딩해주는 명령어다
   //브라우저에서 ffempg를 사용해서 콘솔창에서 명령어를 치는게 아니다. 그래서 브라우저에서 명령을 입력해서 작동시키자.
   //콘솔창에 치는 명령어를 브라우저에서 실시한다고 생각하면 간단하다(리눅스처럼!!)
+  const mp4File = ffmpeg.FS("readFile", "output.mp4"); //outpur.mp4 파일을 읽는다.
+  const mp4Blob = new Blob([mp4File.buffer, { type: "video/mp4" }]);
+  const mp4Url = URL.createObjectURL(mp4Blob);
+  //Binary Large Object :blob  Butter는 우리 영상을 나타내는 byte의 배열!
+  //mdn-BLOB은 일반적으로 그림, 오디오, 또는 기타 멀티미디어 오브젝트인 것이 보통이지만, 바이너리 실행 코드가 BLOB으로 저장되기도 한다
 
   const a = document.createElement("a"); //링크를 만듬
-  a.href = videoFile;
-  a.download = "MyRecording.webm"; //다운로드를 시킨다.
+  a.href = mp4Url;
+  a.download = "MyRecording.mp4"; //다운로드를 시킨다.
   document.body.appendChild(a); //body 안에 a태그를 추가
   a.click(); //사용자가 클릭을 누른것처럼 작동
 };
@@ -46,7 +51,7 @@ const handleStart = () => {
     //ondataaavailable
     //console.log(event)
     videoFile = URL.createObjectURL(event.data); //브라우저 메모리에서만 가능한 url을 만들어준다. 즉 브라우저의 메모리를 가리키는 url이다! 대충 파일을 가리킨다고 생각!
-    //이 url을 통해 파일 참조가능. videoFile은 blob이다
+    //이 url을 통해 파일 참조가능. videoFile은 blob이다 고로 event.data 도 사실 blob였다!
     video.srcObject = null;
     video.src = videoFile; //video url을 설정
     video.loop = true; //비디오 반복재생
