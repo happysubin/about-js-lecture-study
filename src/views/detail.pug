@@ -1,6 +1,7 @@
 extends layout/layout.pug
 
 block content 
+    video(src=`/${video.videoURL}`)
     h1=video.title
     h3=video.description
     h4=video.createdAt

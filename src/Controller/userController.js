@@ -29,9 +29,11 @@ export const postChangepassword = async (req, res) => {
         "Two passwords (changepassword, check change password) are different.",
     });
   }
-  const newPassword = await bcrypt.hash(changePassword, 10);
-  await User.findByIdAndUpdate(_id, { password: newPassword });
-  return res.redirect("/");
+
+  user.password = changePassword;
+  await user.save();
+  console.log(req.session.user.password, user.password);
+  return res.redirect("/user/logout");
 };
 
 export const getEditProfile = (req, res) => {
@@ -127,11 +129,10 @@ export const postSignup = async (req, res) => {
       errorMessage: "Password 1 and password 2 do not match.",
     });
   }
-  const newPassword = await bcrypt.hash(password, 10); //10 을 제일 많이 사용한다고 한다.
   await User.create({
     name,
     username,
-    password: newPassword,
+    password,
     location,
     email,
   });

@@ -7,7 +7,7 @@ import {
   postUpload,
   videoDetail,
 } from "../Controller/videoController";
-import { privateProtector } from "../localMiddleware";
+import { privateProtector, uploadVideo } from "../localMiddleware";
 
 const videoRouter = express.Router();
 
@@ -15,7 +15,7 @@ videoRouter
   .route("/upload")
   .all(privateProtector)
   .get(getUpload)
-  .post(postUpload); //비디오 업로드
+  .post(uploadVideo.single("video"), postUpload); //비디오 업로드
 
 videoRouter
   .route("/:id/edit")

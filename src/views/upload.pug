@@ -2,12 +2,13 @@ extends layout/layout.pug
 
 block content 
     h1 upload 
-    form(method="post")
+    form(method="post" enctype="multipart/form-data") 
+        input(type="file" required placeholder="video" name='video')
         input(type="text" name="title" placeholder="title" required)
         input(type="text" name="description" placeholder="description" required)
         input(type="text" name="hashtags" placeholder="hashtags" required)
         input(type="submit" value="Upload")
-
+//- enctype="multipart/from-data 를 작성한 이후부터 multer 사용가능
 
 
         

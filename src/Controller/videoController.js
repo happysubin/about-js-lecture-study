@@ -6,10 +6,13 @@ export const getUpload = (req, res) => {
 
 export const postUpload = async (req, res) => {
   const { title, description, hashtags } = req.body;
+  const { path } = req.file;
+  console.log(req.file);
   await Video.create({
     title,
+    videoURL: path,
     description,
-    hashtags: hashtags.split(",").map((ele) => `#${ele}`),
+    hashtags: Video.formatHashtags(hashtags),
   });
 
   return res.redirect("/");
@@ -45,9 +48,7 @@ export const postEditVideo = async (req, res) => {
   await Video.findByIdAndUpdate(id, {
     title,
     description,
-    hashtags: hashtags
-      .split(",")
-      .map((element) => (element.startsWith("#") ? element : `#${element}`)),
+    hashtags: Video.formatHashtags(hashtags),
   });
 
   return res.redirect(`/video/${id}`);

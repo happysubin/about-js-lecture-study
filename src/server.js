@@ -32,6 +32,7 @@ app.use(
     }),
   })
 );
+app.use("/uploads", express.static("uploads"));
 
 app.use(localMiddlewares);
 app.use("/", globalRouter);
