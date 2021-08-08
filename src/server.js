@@ -5,7 +5,7 @@ import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import session from "express-session";
 import mongoStore from "connect-mongo";
-import cors from "cors";
+import flash from "express-flash";
 import { localmiddlewares } from "./middlewares";
 import apiRouter from "./routers/apiRouter";
 
@@ -23,6 +23,8 @@ app.set("views", process.cwd() + "/src/views"); //현재작업죽인 디렉토�
 app.set("view engine", "pug"); //view engine 을 pug로 설정
 app.use(express.urlencoded({ extended: true })); //이걸 통해 req.body 사용가능
 app.use(logger);
+//flash 설치한 순간부터 req.flash 라는 함수를 사용할 수 있다.
+// cookieParser session을 필요로 한다.
 
 app.use(
   session({
@@ -34,6 +36,9 @@ app.use(
     }),
   })
 );
+app.use(flash());
+//req.flash 함수가 res.locals와 같은 속성을 만든다. messages locals 를 만들어준다. 그걸 template engine에서 사용 가능!
+
 app.use("/uploads", express.static("uploads"));
 app.use(
   "/assets",

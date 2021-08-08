@@ -104,6 +104,7 @@ export const getProfile = async (req, res) => {
 
 export const logout = (req, res) => {
   req.session.destroy();
+  req.flash("info", "Bye Bye");
   return res.redirect("/");
 };
 
@@ -216,6 +217,7 @@ export const finalGithubLogin = async (req, res) => {
 
 export const getChangepassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
+    req.flash("error", "Can't change password.");
     res.redirect("/");
   }
   return res.render("change-password", { pageTitle: "Change PassWord" });
@@ -246,6 +248,7 @@ export const postChangepassword = async (req, res) => {
   user.password = newPassword;
   await user.save();
   console.log(user.password, req.session.user.password);
+  req.flash("info", "Password updated");
   return res.redirect("/users/logout");
 };
 //세션에서 id,비밀번호를 가져와서 비밀번호 업데이트가능.그러나 이때는 세션의 비밀번호도 db의 비밀번호도 바꿔야함
