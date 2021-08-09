@@ -1,5 +1,8 @@
+import axios from "axios";
 import bcrypt from "bcrypt";
 import User from "../Model/User";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const profile = (req, res) => {
   return res.render("profile");
@@ -137,4 +140,31 @@ export const postSignup = async (req, res) => {
     email,
   });
   return res.redirect("/login");
+};
+
+export const getGithub = async (req, res) => {
+  const baseUrl = "https://github.com/login/oauth/authorize";
+  const config = {
+    client_id: process.env.CLIENT_ID,
+    allow_signup: false,
+    scope: "read:user user:email", //우리가 data를 가져올수 있는 범위를 정한다
+  };
+  const param = new URLSearchParams(config).toString(); // url 에서 보이는 파라미터 형태로 나온다.
+  const finalUrl = `${baseUrl}?${param}`;
+  return res.redirect(finalUrl);
+};
+
+export const finalGithub = async (req, res) => {
+  console.log(req.query.code);
+  const data = await axios.post("https://github.com/login/oauth/access_token", {
+    headers: {
+      Accept: "application/json",
+    },
+    params: {
+      code: req.query.code,
+      client_secret: process.env.CLIENT_SECRET,
+      client_id: process.env.CLIENT_ID,
+    },
+  });
+  console.log(data);
 };

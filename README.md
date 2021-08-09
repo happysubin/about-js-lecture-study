@@ -28,3 +28,24 @@
 
 1. 부가적인 기능들 구현. video를 올리고 가능하면 github 로그인 까지!
    express.static 메소드를 이용해 정적 파일을 제공하고 multer로 비디오를 저장! 이후 path를 이용해 저장된 비디오 파일을 video 태그 src와 연결하면서 비디오를 보여준다.
+
+2. URLSearchParams(객체) 인터페이스는 URL의 쿼리 문자열에 대해 작업할 수 있는 유틸리티 메서드를 정의합니다.(mdn)
+   관련 mdn https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+   Constructor URLSearchParams()
+   Methods
+   append() 파라미터를 url에 추가
+   delete()
+   entries()
+   forEach()
+   get()
+   getAll()
+   has()
+   keys()
+   set()
+   sort()
+   toString() 우리는 이것을 사용! URLSearchParams 객체를 string 로 바꾼다
+   values()
+3. 깃허브 로그인 로직
+   1. 유저 세팅에서 developer에서 new OAuth Apps을 만들고 유저키와 아이디를 받는다.
+   2. 클라이언트를 GET https://github.com/login/oauth/authorize get 메소드로 이 url로 보낸다. 물론 필수적인 client_id와 다양한 옵션들이 있다.
+   3. 이후 클라이언트가 정보 제공을 동의하면 우리는 new OAuth Apps에서 정한 url로 쿼리에 코드를 가지고 redirect 된다.

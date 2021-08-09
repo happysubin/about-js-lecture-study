@@ -7,8 +7,10 @@ import {
   profile,
   postChangepassword,
   postEditProfile,
+  getGithub,
+  finalGithub,
 } from "../Controller/userController";
-import { privateProtector } from "../localMiddleware";
+import { privateProtector, publicProtector } from "../localMiddleware";
 
 const userRouter = express.Router();
 
@@ -25,5 +27,8 @@ userRouter
 userRouter.get("/delete", privateProtector, deleteUser);
 userRouter.get("/logout", privateProtector, logout);
 userRouter.get("/:id", profile); //user 개인 정보를 가져옴
+
+userRouter.get("/github/login", publicProtector, getGithub);
+userRouter.get("/github/callback", publicProtector, finalGithub);
 
 export default userRouter;
