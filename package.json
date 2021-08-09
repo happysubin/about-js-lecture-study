@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/server"
+    "dev": "nodemon --exec babel-node src/server",
+    "assets": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -31,7 +32,10 @@
     "@babel/core": "^7.14.8",
     "@babel/node": "^7.14.9",
     "@babel/preset-env": "^7.14.9",
+    "babel-loader": "^8.2.2",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "webpack": "^5.49.0",
+    "webpack-cli": "^4.7.2"
   }
 }

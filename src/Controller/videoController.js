@@ -64,11 +64,15 @@ export const videoDetail = async (req, res) => {
   return res.render("detail", { video });
 };
 
-export const search = (req, res) => {
-  return res.render("search");
+export const search = async (req, res) => {
+  const { searchTerm } = req.query;
+  const videos = await Video.find({ title: searchTerm });
+  console.log(videos);
+  return res.render("search", { videos });
 };
 
 export const home = async (req, res) => {
   const videos = await Video.find();
+  console.log(videos);
   return res.render("home", { videos });
 };

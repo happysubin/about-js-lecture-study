@@ -60,3 +60,9 @@
 
 1. input accept로 받는 파일들을 제한할 수 있다.
 2. 개인적으로 multer 을 아바타를 업로드 할 때 파일을 업로드하지 않아도 유지할지 고민했다. 바로 세션 유저에 있는 avatar ulr을 가져와서 삼항연산자를 이용해서 유지시킨다!!! req.file 이 없거나 있거나가 중요! multer router에 미들웨어 안써서 한참 고생했다. 집중!
+
+webpack을 적용한다!!! 오늘은 mongoose populate 도 정리할 예정
+먼저 webpack은 자바스크립트 모듈 번들러이다.
+entry는 우리가 처리하고자 하는 파일들이 있다.  
+output은 정제된 코드들이 나오는 파일들을 말한다.
+https://github.com/babel/babel-loader 바벨로더 사용법 참고.
