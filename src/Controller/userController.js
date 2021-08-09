@@ -9,6 +9,11 @@ export const profile = (req, res) => {
 };
 
 export const getChangepassword = (req, res) => {
+  if (req.session.user.socialLogin) {
+    return res.render("login", {
+      errorMEssage: "this is social login. you can't change password",
+    });
+  }
   return res.render("changePassword");
 };
 
@@ -166,7 +171,7 @@ export const finalGithub = async (req, res) => {
     {
       Accept: "application/json",
     }
-  );
+  ); 위 함수로도 가능하긴하다
   */
   const data = await axios.post(
     "https://github.com/login/oauth/access_token",
@@ -183,5 +188,47 @@ export const finalGithub = async (req, res) => {
   );
   //const json = await data.json();
   const tokenReq = data.data;
-  console.log(tokenReq);
+
+  if ("access_token" in tokenReq) {
+    const { access_token } = tokenReq;
+    const user = await axios.get("https://api.github.com/user", {
+      headers: {
+        Authorization: `token ${access_token}`,
+      },
+    });
+    const { data: userData } = user;
+    //console.log(userData);
+    const email = await axios.get("https://api.github.com/user/emails", {
+      headers: {
+        Authorization: `token ${access_token}`,
+      },
+    });
+    const { data: emailData } = email;
+    const emailObj = emailData.find(
+      (ele) => ele.primary === false && ele.verified === false
+    );
+
+    if (!emailObj) {
+      return res.redirect("/login");
+    }
+    const userExists = await User.findOne({ email: emailObj.email });
+
+    if (!userExists) {
+      await User.create({
+        name: userData.name,
+        username: userData.login,
+        socialLogin: true,
+        password: "",
+        location: userData.location,
+        email: emailObj.email,
+      });
+    }
+    req.session.loggedIn = true;
+    req.session.user = userExists;
+    return res.redirect("/");
+  } else {
+    return res.redirect("/login");
+  }
+
+  //
 };

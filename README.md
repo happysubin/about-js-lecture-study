@@ -53,3 +53,5 @@
    2. 클라이언트를 GET https://github.com/login/oauth/authorize get 메소드로 이 url로 보낸다. 물론 필수적인 client_id와 다양한 옵션들이 있다.
    3. 이후 클라이언트가 정보 제공을 동의하면 우리는 new OAuth Apps에서 정한 url로 쿼리에 코드를 가지고 redirect 된다.
    4. 이후 redirect 된 url에 이어 바로 post 메소드를 이용해 client_id, key ,code를 가지고 post 요청을 https://github.com/login/oauth/access_token 파라미터와 함께 보낸다. 이후 여기서 access_token을 빼낸다.
+   5. GET https://api.github.com/user 토큰과 함께 api에 접근한다
+   6. 그러면 api에서 data를 보낸다. 그 데이터를 바탕으로 유저를 생성!!!
