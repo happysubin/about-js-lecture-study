@@ -10,8 +10,8 @@ export const profile = (req, res) => {
 
 export const getChangepassword = (req, res) => {
   if (req.session.user.socialLogin) {
-    return res.render("login", {
-      errorMEssage: "this is social login. you can't change password",
+    return res.render("editProfile", {
+      errorMessage: "this is social login. you can't change password",
     });
   }
   return res.render("changePassword");
@@ -51,15 +51,16 @@ export const getEditProfile = (req, res) => {
 export const postEditProfile = async (req, res) => {
   const {
     session: {
-      user: { _id, username: checkUsername, emial: checkEmail },
+      user: { _id, username: checkUsername, email: checkEmail, avatarUrl },
     },
     body: { username, name, location, email },
+    file,
   } = req;
-
+  console.log(req.body, req.session.user, req.file);
   const user = await User.exists({
     $or: [{ email }, { username }],
   });
-
+  console.log(checkUsername, username, email, checkEmail);
   if (checkUsername === username || email === checkEmail) {
     return res.render("editProfile", {
       errorMessage: "There is no change.",
@@ -74,6 +75,7 @@ export const postEditProfile = async (req, res) => {
     _id,
     {
       username,
+      avatarUrl: file ? file.path : avatarUrl, //path 가 없으면 세션에 있는 아바타 url로 유지!
       name,
       location,
       email,
@@ -93,7 +95,7 @@ export const deleteUser = async (req, res) => {
 
   await User.findOneAndDelete(_id);
   req.session.destroy();
-  return res.send("delete");
+  return res.redirect("/");
 };
 
 export const logout = (req, res) => {
@@ -126,6 +128,7 @@ export const getSignup = (req, res) => {
 
 export const postSignup = async (req, res) => {
   const { name, username, password2, password, location, email } = req.body;
+  const { file } = req;
   const user = await User.exists({ username, email });
   if (user) {
     return res.render("signUp", {
@@ -139,6 +142,7 @@ export const postSignup = async (req, res) => {
   }
   await User.create({
     name,
+    avatarUrl: file ? file.path : "",
     username,
     password,
     location,
@@ -211,10 +215,10 @@ export const finalGithub = async (req, res) => {
     if (!emailObj) {
       return res.redirect("/login");
     }
-    const userExists = await User.findOne({ email: emailObj.email });
+    let userExists = await User.findOne({ email: emailObj.email });
 
     if (!userExists) {
-      await User.create({
+      userExists = await User.create({
         name: userData.name,
         username: userData.login,
         socialLogin: true,

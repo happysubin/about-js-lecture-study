@@ -7,7 +7,7 @@ import {
 } from "../Controller/userController";
 
 import { home, search } from "../Controller/videoController";
-import { publicProtector } from "../localMiddleware";
+import { publicProtector, uploadAvatar } from "../localMiddleware";
 
 const globalRouter = express.Router();
 
@@ -17,7 +17,7 @@ globalRouter
   .route("/signUp")
   .all(publicProtector)
   .get(getSignup)
-  .post(postSignup);
+  .post(uploadAvatar.single("avatar"), postSignup);
 globalRouter.get("/search", search);
 
 export default globalRouter;

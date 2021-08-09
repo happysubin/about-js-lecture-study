@@ -10,7 +10,11 @@ import {
   getGithub,
   finalGithub,
 } from "../Controller/userController";
-import { privateProtector, publicProtector } from "../localMiddleware";
+import {
+  privateProtector,
+  publicProtector,
+  uploadAvatar,
+} from "../localMiddleware";
 
 const userRouter = express.Router();
 
@@ -18,7 +22,7 @@ userRouter
   .route("/edit-profile")
   .all(privateProtector)
   .get(getEditProfile)
-  .post(postEditProfile);
+  .post(uploadAvatar.single("avatar"), postEditProfile);
 userRouter
   .route("/change-password")
   .all(privateProtector)
