@@ -1,5 +1,7 @@
 REACT를 연습을 위해 시작!!!!
 
+컴포넌트를 생성 할 때는 constructor -> componentWillMount -> render -> componentDidMount 순
+
 1. jsconfig.js 설정 파일을 통해서 기본적으로 src폴더를 보여준다
 2. Fragments 는 내가 원하는 만큼 컴포넌트를 return 가능하게 한다
 3. Composition 은 두 개 이상의 route를 렌더링하는 방식이다
