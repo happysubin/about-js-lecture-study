@@ -155,16 +155,33 @@ export const getGithub = async (req, res) => {
 };
 
 export const finalGithub = async (req, res) => {
-  console.log(req.query.code);
-  const data = await axios.post("https://github.com/login/oauth/access_token", {
-    headers: {
-      Accept: "application/json",
-    },
-    params: {
+  //axios.post("url",params,config(headers가 포함됨)) 이렇게 인자가 구성
+  /*const data = await axios.post(
+    "https://github.com/login/oauth/access_token",
+    {
       code: req.query.code,
       client_secret: process.env.CLIENT_SECRET,
       client_id: process.env.CLIENT_ID,
     },
-  });
-  console.log(data);
+    {
+      Accept: "application/json",
+    }
+  );
+  */
+  const data = await axios.post(
+    "https://github.com/login/oauth/access_token",
+    {
+      code: req.query.code,
+      client_secret: process.env.CLIENT_SECRET,
+      client_id: process.env.CLIENT_ID,
+    },
+    {
+      headers: {
+        Accept: "application/json",
+      },
+    }
+  );
+  //const json = await data.json();
+  const tokenReq = data.data;
+  console.log(tokenReq);
 };
