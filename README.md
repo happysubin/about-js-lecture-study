@@ -18,3 +18,7 @@ REACT를 연습을 위해 시작!!!!
 11. //history.push 는 path를 이용해 원하는 컴포넌트로 이동한다.(props 안에 history)
 12. //mdn : super 키워드는 부모 오브젝트의 함수를 호출할 때 사용됩니다. this 키워드가 사용되기 전에 호출되어야 합니다. // super() 부모 클래스의 생성자
 13. 커밋 삭제하고 가지고 놀다가 커밋들이 이상하게 꼬였다. 원리가 생각보다 어려운듯.
+
+14. children props 는( ex <Section>movie<Section> )이런 태그 사이 값을 받는다
+    if문 대신 && 조건부 렌더링!! { count && <h1>Messages: {count}</h1>} 예시 count 가 true 면 뒤가 실행
+    컴포넌트는 항상 true

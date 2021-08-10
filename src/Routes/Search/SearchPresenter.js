@@ -19,3 +19,5 @@ SearchPresenter.propTypes = {
   loading: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
+
+export default SearchPresenter;
