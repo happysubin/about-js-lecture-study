@@ -2,14 +2,18 @@ extends layout/layout.pug
 
 block content 
     video(src=`/${video.videoURL}`)
+    a(href=`/user/${video.owner._id}`)
+        h1=video.owner.name
     h1=video.title
     h3=video.description
     h4=video.createdAt
     each hashtag in video.hashtags
         ul 
-            li=hashtag 
-    
-    a(href=`/video/${video.id}/delete`)
-        button Delete video
-    a(href=`/video/${video.id}/edit`)
-        button Edit video
+            li=hashtag
+            //-여기가 오류 수정을 잘한듯 계속 .id 속성으로 찾으니 오류가 뜨지. user._id 전에 user 가 있는지 체크해서 오류를 잡았다.
+    if user
+        if String(user._id)===String(video.owner._id)
+            a(href=`/video/${video.id}/delete`)
+                button Delete video
+            a(href=`/video/${video.id}/edit`)
+                button Edit video

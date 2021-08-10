@@ -2,3 +2,5 @@ extends layout/layout.pug
 
 block content 
     span=user.username
+    each video in user.videos 
+        p=video

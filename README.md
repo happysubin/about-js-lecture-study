@@ -71,3 +71,6 @@ sass sass-loader css-loader style-loader 을 전부 install
 
 https://www.npmjs.com/package/mini-css-extract-plugin mini-css-extract-plugin 사용 문서! js와 분리된 css파일을 만들기 위해 사용.
 현재는 js가 css도 처리.
+
+3. 객체 내부 프로퍼티 확인전에 객체가 존재하는 지 확인하자. user 을 체크하면 되는데 user.\_id를 계속 체크하니까 오류가 발생했었다!!!
+   mongoose ref에는 모델이 들어가야한다. populate는 오브젝트 아이디를 그 아이디를 가지는 데이터(객체) 로 변환!

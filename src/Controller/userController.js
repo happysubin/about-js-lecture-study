@@ -4,8 +4,11 @@ import User from "../Model/User";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const profile = (req, res) => {
-  return res.render("profile");
+export const profile = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).populate("videos");
+  console.log(user);
+  return res.render("profile", { user });
 };
 
 export const getChangepassword = (req, res) => {

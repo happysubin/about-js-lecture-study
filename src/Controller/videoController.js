@@ -1,3 +1,4 @@
+import User from "../Model/User";
 import Video from "../Model/Video";
 
 export const getUpload = (req, res) => {
@@ -7,14 +8,21 @@ export const getUpload = (req, res) => {
 export const postUpload = async (req, res) => {
   const { title, description, hashtags } = req.body;
   const { path } = req.file;
+  const { _id } = req.session.user;
   console.log(req.file);
-  await Video.create({
+  const newVideo = await Video.create({
     title,
     videoURL: path,
     description,
+    owner: _id,
     hashtags: Video.formatHashtags(hashtags),
   });
-
+  const user = await User.findById(_id);
+  user.videos.push(newVideo._id); //아이디를 저장해야지 populate이 가능!!!!
+  /* 여기에서 세션에 과연 비디오를 push 해야 할까? push하는 이유는 우리는 즉 profile에서 유저의 모든 동영상을 가져오려한다. 우리는 
+  req.params.id 로 find해서 가져오는 것이지 세션에 관련해서 뭘 진행하는 것이 아니라 세션에 푸쉬할 이유가 없다.
+  */
+  user.save();
   return res.redirect("/");
 };
 
@@ -56,7 +64,8 @@ export const postEditVideo = async (req, res) => {
 
 export const videoDetail = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
+  const video = await Video.findById(id).populate("owner");
+  console.log(video);
   if (!video) {
     console.log("there is no video");
     return res.status(404);
