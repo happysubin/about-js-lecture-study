@@ -1,7 +1,7 @@
 extends layout/layout.pug
 
 block content 
-    .video-Container
+    .video-Container(data-id=video._id)
         video(src=`/${video.videoURL}`)
         .video-Controller
             button#playBtn Play

@@ -111,7 +111,8 @@ const handleLeave = () => {
   controlTimeout = setTimeout(hideControls, 3000);
 };
 const handleView = () => {
-  const id = document.location.pathname.split("/")[2];
+  //const id = document.location.pathname.split("/")[2];
+  const { id } = videoContainer.dataset;
   axios.post(`/api/videos/${id}/view`);
 };
 
