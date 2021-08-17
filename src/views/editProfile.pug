@@ -3,8 +3,6 @@ extends layout/layout.pug
 block content 
     if errorMessage
         span=errorMessage
-    h1 edit-profile
-
     img(src=`/${user.avatarUrl}` alt="no img")
     form(method="post" enctype="multipart/form-data")
         input(type="file" placeholder="Avatar" name="avatar" accept="image/*")

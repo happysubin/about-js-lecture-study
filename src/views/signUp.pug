@@ -3,7 +3,6 @@ extends layout/layout.pug
 block content
     if errorMessage 
         span=errorMessage
-    h1 Signup
     form(method="post" enctype="multipart/form-data")
         input(type="file" placeholder="Avatar" name="avatar")
         input(type="text" required placeholder="name" name="name")

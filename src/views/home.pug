@@ -2,7 +2,5 @@ extends layout/layout.pug
 include mixins/video
 
 block content 
-    h1 home
     each video in videos 
         +video(video)
-        

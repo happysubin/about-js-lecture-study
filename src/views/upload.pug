@@ -1,7 +1,6 @@
 extends layout/layout.pug
 
 block content 
-    h1 upload 
     form(method="post" enctype="multipart/form-data") 
         input(type="file" required placeholder="video" name='video' accept="video/*") 
         input(type="text" name="title" placeholder="title" required)

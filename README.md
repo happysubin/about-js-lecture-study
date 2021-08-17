@@ -74,3 +74,10 @@ https://www.npmjs.com/package/mini-css-extract-plugin mini-css-extract-plugin �
 
 3. 객체 내부 프로퍼티 확인전에 객체가 존재하는 지 확인하자. user 을 체크하면 되는데 user.\_id를 계속 체크하니까 오류가 발생했었다!!!
    mongoose ref에는 모델이 들어가야한다. populate는 오브젝트 아이디를 그 아이디를 가지는 데이터(객체) 로 변환!
+
+6일차
+
+1. video 태그에 controls 프로퍼티를 주면 조작이 가능 ! 대신 못생김 ㅠㅠ
+2. nodemon 파일을 만든다! 여기서 nodemon 실행 설정들을 조작. scripts에서 nodemon이라고만 코드를 작성하면 nodemon 내용들을 실행.
+   여기서 ignore은 nodemon이 변화를 감지하지 않는 파일들을 의미! 프론트엔드 들을 그렇게 만들었다.
+3. scripts에서 webpack라고만 해도 자동으로 webpack.config.js 파일을 실행한다

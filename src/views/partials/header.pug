@@ -1,19 +1,19 @@
 header 
     nav
         a(href="/")
-            h4 Home 
+            span Home 
         a(href="/search")
-            h4 Search
+            span Search
         if loggedIn
             a(href="/video/upload") 
-                h4 upload
+                span upload
             a(href="/user/logout")
-                h4 logout
+                span logout
             a(href="/user/edit-profile")
-                h4 edit-profile
+                span edit-profile
         else 
             a(href="/signUp") 
-                h4 sign up
+                span sign up
             a(href="/login") 
-                h4 Login
+                span Login
 
