@@ -8,6 +8,9 @@ const videoSchema = mongoose.Schema({
   hashtags: [{ type: String }],
   date: { type: Date, default: Date.now },
   owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" }, //ref에는 id가 해당하는 모델을 작성
+  meta: {
+    views: { type: Number, default: 0, rerquired: true },
+  },
 });
 
 videoSchema.static("formatHashtags", function (hashtags) {

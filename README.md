@@ -81,3 +81,7 @@ https://www.npmjs.com/package/mini-css-extract-plugin mini-css-extract-plugin �
 2. nodemon 파일을 만든다! 여기서 nodemon 실행 설정들을 조작. scripts에서 nodemon이라고만 코드를 작성하면 nodemon 내용들을 실행.
    여기서 ignore은 nodemon이 변화를 감지하지 않는 파일들을 의미! 프론트엔드 들을 그렇게 만들었다.
 3. scripts에서 webpack라고만 해도 자동으로 webpack.config.js 파일을 실행한다
+4. 조회수 기능을 구현하려고한다. 우선 먼저 video 스키마에 view 라는 메타 데이터를 생성한다. 그런 다음 논리를 생각하자
+   저번에는 동영상을 다 보면 조회수가 오르게 구현했으니 이번엔 페이지에 들어가기만 해도 조회수가 오르도록 구현해보려고한다. 그러면 조회수를 올리려면 어떻게 해야할까 우선 들어가면 비디오 조회수가 오르게 해야한다. 그러면 아이디를 이용해서 비디오를 올려야한다. 여기서 아이디를 어떻게 가져올것인가?
+   첫번째는, url 을 가져와서 id 를 꺼내 id 를 백엔드에 요청을 보내며 백엔드에서 비디오를 찾고 그 비디오의 조회수를 증가시키는 방법이다.
+   두번째는, html data-attribute를 이용해 video id 를 가져와서 그 아이디로 백엔드에 요청을 보내고 마찬가지로 아이디로 비디오를 찾고 조회수를 증가시킨다.

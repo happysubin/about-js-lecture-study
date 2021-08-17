@@ -8,6 +8,7 @@ import globalRouter from "./Router/globalRouter";
 import userRouter from "./Router/userRouter";
 import videoRouter from "./Router/videoRouter";
 import { localMiddlewares } from "./localMiddleware";
+import apiRouter from "./Router/apiRouter";
 
 dotenv.config();
 
@@ -39,5 +40,6 @@ app.use(localMiddlewares);
 app.use("/", globalRouter);
 app.use("/user", userRouter);
 app.use("/video", videoRouter);
+app.use("/api", apiRouter);
 
 app.listen(process.env.PORT);

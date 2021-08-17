@@ -2,6 +2,7 @@ mixin video(video)
     div.video-list
         a(href=`/video/${video._id}`)
             span.video-title=video.title
+            span=video.meta.views
             
           
 

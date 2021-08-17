@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const muteBtn = document.getElementById("muteBtn");
 const playBtn = document.getElementById("playBtn");
 const video = document.querySelector("video");
@@ -108,6 +110,10 @@ const handleMove = () => {
 const handleLeave = () => {
   controlTimeout = setTimeout(hideControls, 3000);
 };
+const handleView = () => {
+  const id = document.location.pathname.split("/")[2];
+  axios.post(`/api/videos/${id}/view`);
+};
 
 muteBtn.addEventListener("click", handleMute);
 playBtn.addEventListener("click", handelPlay);
@@ -119,3 +125,4 @@ fullScreen.addEventListener("click", handleFullScreen);
 window.addEventListener("keydown", handleKey);
 video.addEventListener("mousemove", handleMove);
 video.addEventListener("mouseleave", handleLeave);
+window.addEventListener("load", handleView);

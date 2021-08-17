@@ -85,3 +85,13 @@ export const home = async (req, res) => {
   console.log(videos);
   return res.render("home", { videos });
 };
+
+export const registerView = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (!video) return res.status(404);
+  console.log(video);
+  video.meta.views = video.meta.views + 1;
+  await video.save();
+  return res.status(200);
+};
