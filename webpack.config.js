@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     main: "./src/client/js/main.js",
     video: "./src/client/js/video.js",
+    recorder: "./src/client/js/recorder.js",
   }, //우리가 코드를 작성하는 곳이다.
 
   mode: "development", //개발중이라는 뜻이다.

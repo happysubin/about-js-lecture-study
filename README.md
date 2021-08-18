@@ -85,3 +85,18 @@ https://www.npmjs.com/package/mini-css-extract-plugin mini-css-extract-plugin �
    저번에는 동영상을 다 보면 조회수가 오르게 구현했으니 이번엔 페이지에 들어가기만 해도 조회수가 오르도록 구현해보려고한다. 그러면 조회수를 올리려면 어떻게 해야할까 우선 들어가면 비디오 조회수가 오르게 해야한다. 그러면 아이디를 이용해서 비디오를 올려야한다. 여기서 아이디를 어떻게 가져올것인가?
    첫번째는, url 을 가져와서 id 를 꺼내 id 를 백엔드에 요청을 보내며 백엔드에서 비디오를 찾고 그 비디오의 조회수를 증가시키는 방법이다.
    두번째는, html data-attribute를 이용해 video id 를 가져와서 그 아이디로 백엔드에 요청을 보내고 마찬가지로 아이디로 비디오를 찾고 조회수를 증가시킨다.
+
+7일차
+
+1. 우리 웹사이트에서 비디오 촬영이 가능하고 그 비디오를 저장하는 것까지 복습해보자.
+   출처 mdn https://developer.mozilla.org/ko/docs/Web/API/MediaDevices/getUserMedia
+2. Navigator.mediaDevices 읽기 전용 속성은 카메라, 마이크, 화면 공유와 같이 현재 연결된 미디어 입력 장치에 접근할 수 있는 MediaDevices 객체를 반환합니다.
+   .MediaDevices 인터페이스는 카메라, 마이크, 공유 화면 등 현재 연결된 미디어 입력 장치로의 접근 방법을 제공하는 인터페이스입니다. 다르게 말하자면, 미디어 데이터를 제공하는 모든 하드웨어로 접근할 수 있는 방법입니다.
+   getUserMedia()
+   사용자에게 권한을 요청한 후, 시스템의 카메라와 오디오 각각 혹은 모두 활성화하여, 장치의 입력 데이터를 비디오/오디오 트랙으로 포함한 MediaStream (en-US)을 반환합니다.
+   개념 숙지 완료! Navigator.mediaDevices.getUserMedia()를 통해 우리 컴퓨터의 카메라 오디오 미디어의 스트림을 가져옵니다.
+3. HTMLMediaElement.srcObject mdn
+   srcObject객체에 스트림 값을 할당.이걸 이용해야 프리뷰를 보는 게 가능하당.
+   현재 HTMLMediaElement 객체에서 재생 중이거나 재생 되었던 미디어를 표현하는 MediaStream 객체를 반환합니다. 원본은 우리 컴퓨터에서 가져온다.
+   HTMLMediaElement 인터페이스의 srcObject 속성은 HTMLMediaElement와 연결된 미디어의 원본 역할을 하는 개체를 설정하거나 반환합니다. 개체는 MediaStream, MediaSource, Blob 또는 파일(Blob에서 상속됨)일 수 있습니다.
+   이런 내용으로 보아 프리뷰로 동영상이 보인다!
