@@ -99,4 +99,8 @@ https://www.npmjs.com/package/mini-css-extract-plugin mini-css-extract-plugin �
    srcObject객체에 스트림 값을 할당.이걸 이용해야 프리뷰를 보는 게 가능하당.
    현재 HTMLMediaElement 객체에서 재생 중이거나 재생 되었던 미디어를 표현하는 MediaStream 객체를 반환합니다. 원본은 우리 컴퓨터에서 가져온다.
    HTMLMediaElement 인터페이스의 srcObject 속성은 HTMLMediaElement와 연결된 미디어의 원본 역할을 하는 개체를 설정하거나 반환합니다. 개체는 MediaStream, MediaSource, Blob 또는 파일(Blob에서 상속됨)일 수 있습니다.
-   이런 내용으로 보아 프리뷰로 동영상이 보인다!
+   이후 htmlmediaelement.play() 를 이용하면 동영상이 보인다.
+4. MediaRecorder 는 미디어를 저장할 수 있다.
+5. recorder.ondataavailable는 recording 이 끝나면 이 이벤트가 실행된다.
+6. URL.createObjectURL()의 매개변수는 object 객체 URL을 생성할 File, Blob, MediaSource (en-US) 객체를 필요로합니다. video src에 넣을 url을 만듭니다.
+7. 비디오 srcObjetc 를 없애고 src에 URL을 넣고 비디오를 반복시키고 재생하면 프리뷰가 생긴다. 다운로드는 html로 속임수를 줘서 간단하게 다운로드한다!
