@@ -12,12 +12,22 @@ export default class SearchContainer extends React.Component {
     error: null,
   };
 
-  handleSubmit = () => {
+  handleSubmit = (event) => {
+    event.preventDefault();
     const { searchTerm } = this.state;
     if (searchTerm !== "") {
       //빈문자열이 아니라면
       this.searchByTerm(searchTerm);
     }
+  };
+
+  updateTerm = (event) => {
+    const {
+      target: { value },
+    } = event;
+    this.setState({
+      searchTerm: value,
+    });
   };
 
   searchByTerm = async (term) => {
@@ -57,6 +67,7 @@ export default class SearchContainer extends React.Component {
         error={error}
         loading={loading}
         handleSubmit={this.handleSubmit}
+        updateTerm={this.updateTerm}
       />
     );
   }
