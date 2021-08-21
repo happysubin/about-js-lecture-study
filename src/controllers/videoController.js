@@ -147,3 +147,9 @@ export const registerView = async (req, res) => {
 };
 
 //res.status()는 res에 status를 추가하는거고 res.sendStatus 는 상태 코드를 브라우저에게 보내준다!
+
+export const createComment = (req, res) => {
+  console.log(req.body);
+  console.log(req.params);
+  res.end();
+};

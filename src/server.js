@@ -21,7 +21,8 @@ app.use((req, res, next) => {
 
 app.set("views", process.cwd() + "/src/views"); //현재작업죽인 디렉토리pwd + src/views
 app.set("view engine", "pug"); //view engine 을 pug로 설정
-app.use(express.urlencoded({ extended: true })); //이걸 통해 req.body 사용가능
+app.use(express.urlencoded({ extended: true })); //이걸 통해 req.body 사용가능 from 으로부터 오는 데이터 이해가능
+app.use(express.json()); // 문자열로 바뀐 json 파일을 js object(json)로 바꿔주는 미들웨어다. json.parse라고 생각!!!
 app.use(logger);
 //flash 설치한 순간부터 req.flash 라는 함수를 사용할 수 있다.
 // cookieParser session을 필요로 한다.

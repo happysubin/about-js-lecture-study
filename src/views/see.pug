@@ -43,5 +43,8 @@ block content
 
 block scripts
     script(src="/assets/js/videoPlayer.js")
-    script(src="/assets/js/commentSection.js")
+    if loggedIn
+        script(src="/assets/js/commentSection.js") 
+        //-첫번째 수정 방법
+
     //-assets url로 가면 assets 정적 파일을 담은 폴더에 접근할 수 있는 권한을 준다!
