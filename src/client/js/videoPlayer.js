@@ -123,7 +123,7 @@ const handleVideoClick = () => {
 };
 
 const handleSpace = (event) => {
-  console.log(event.code);
+  //console.log(event.code);
   if (event.code === "Space") {
     //스페이스바가 누르면 실행된다!!!
     if (video.paused) {

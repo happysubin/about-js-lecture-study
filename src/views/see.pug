@@ -24,16 +24,24 @@ block content
                 span#fullScreen
                     i.fas.fa-expand
                 
-        //-div
-            p=video.description
-            small=video.createdAt
-        //-div
-            small Uploaded by 
-                a(href=`/users/${video.owner._id}`)=video.owner.name
-        //-if String(video.owner._id) === String(user._id)
-            a(href=`${video.id}/edit`) Edit Video &rarr; 
-            br
-            a(href=`${video.id}/delete`) Delete Video &rarr; 
+    div.video__data
+        p.video__title=video.title
+        small.video__owner Uploaded by 
+            a(href=`/users/${video.owner._id}`)=video.owner.name
+        small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+
+        if user
+            if String(video.owner._id) === String(user._id)
+                a(href=`${video.id}/edit`) Edit Video &rarr; 
+                br
+                a(href=`${video.id}/delete`) Delete Video &rarr; 
+    if loggedIn 
+        div.video__comments
+        form.video__comment-form#commentForm
+            textarea(cols="30", rows="10", placeholder="Write a nice commment...")
+            button Add Comment
+
 block scripts
     script(src="/assets/js/videoPlayer.js")
+    script(src="/assets/js/commentSection.js")
     //-assets url로 가면 assets 정적 파일을 담은 폴더에 접근할 수 있는 권한을 준다!

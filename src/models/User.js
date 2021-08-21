@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   socialOnly: { type: Boolean, default: false },
   name: { type: String, required: true },
   location: String,
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }], //개인이 올린 비디오를 저장하는 배열
 });
 
