@@ -1,9 +1,11 @@
+import Comment from "../models/Comment";
 import User from "../models/User";
 import Video from "../models/Video";
 
 export const see = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id).populate("owner");
+  const video = await Video.findById(id).populate("owner").populate("comments");
+  console.log(video);
   if (video) {
     return res.render("see", { pageTitle: video.title, video });
   } else
@@ -148,8 +150,21 @@ export const registerView = async (req, res) => {
 
 //res.status()는 res에 status를 추가하는거고 res.sendStatus 는 상태 코드를 브라우저에게 보내준다!
 
-export const createComment = (req, res) => {
-  console.log(req.body);
-  console.log(req.params);
-  res.end();
+export const createComment = async (req, res) => {
+  const {
+    session: { user },
+    body: { text },
+    params: { id },
+  } = req;
+  const video = await Video.findById(id);
+  if (!video) return res.sendStatus(404);
+
+  const comment = await Comment.create({
+    text,
+    owner: user._id,
+    video: id,
+  });
+  video.comments.push(comment._id);
+  await video.save();
+  return res.sendStatus(201);
 };
