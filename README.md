@@ -22,3 +22,4 @@ REACT를 연습을 위해 시작!!!!
 14. children props 는( ex <Section>movie<Section> )이런 태그 사이 값을 받는다
     if문 대신 && 조건부 렌더링!! { count && <h1>Messages: {count}</h1>} 예시 count 가 true 면 뒤가 실행
     컴포넌트는 항상 true
+15. error 가 발생한경우와 검색해서 결과가 없는경우를 나누기 위해 error이 아니라 Message 컴포넌트를 만들었다.
