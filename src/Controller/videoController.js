@@ -1,5 +1,6 @@
 import User from "../Model/User";
 import Video from "../Model/Video";
+import Comment from "../Model/Comment";
 
 export const getUpload = (req, res) => {
   return res.render("upload");
@@ -64,8 +65,8 @@ export const postEditVideo = async (req, res) => {
 
 export const videoDetail = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id).populate("owner");
-  console.log(video);
+  const video = await Video.findById(id).populate("owner").populate("comments");
+  //console.log(video);
   if (!video) {
     console.log("there is no video");
     return res.status(404);
@@ -90,8 +91,26 @@ export const registerView = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
   if (!video) return res.status(404);
-  console.log(video);
+  //console.log(video);
   video.meta.views = video.meta.views + 1;
   await video.save();
   return res.status(200);
+};
+
+export const createComment = async (req, res) => {
+  const {
+    params: { id },
+    body: { text },
+    session: { user },
+  } = req;
+  const video = await Video.findById(id);
+  if (!video) return res.sendStatus(404);
+  const comment = await Comment.create({
+    user: user._id,
+    text,
+    video: id,
+  });
+  video.comments.push(comment._id);
+  await video.save();
+  return res.sendStatus(201);
 };

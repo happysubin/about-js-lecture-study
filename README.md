@@ -104,3 +104,11 @@ https://www.npmjs.com/package/mini-css-extract-plugin mini-css-extract-plugin �
 5. recorder.ondataavailable는 recording 이 끝나면 이 이벤트가 실행된다.
 6. URL.createObjectURL()의 매개변수는 object 객체 URL을 생성할 File, Blob, MediaSource (en-US) 객체를 필요로합니다. video src에 넣을 url을 만듭니다.
 7. 비디오 srcObjetc 를 없애고 src에 URL을 넣고 비디오를 반복시키고 재생하면 프리뷰가 생긴다. 다운로드는 html로 속임수를 줘서 간단하게 다운로드한다!
+
+8일차 배운것들을 이용해서 댓글 기능을 구현!
+먼저 댓글 모델을 만든다. 프론트엔드에서 백엔드에 ajax 요청!
+http 헤더는 요청에 세부사항, 옵션들을 포함하고 있다.
+보통 json 형식을 이용해 백엔드와 프론트엔드가 요청과 응답을 주고 받는다. 형식을 지정하지 않으면 text 파일로 전송된다.
+그러므로 오브젝트에 정보를 담아서 넘길때 JSON.stringfy 를 이용해 문자열로 변환해서 넘긴다.
+headers 안에 "Content-Type": "application/json"우리가 넘긴 파일이 json 형식임을 알려준다.
+미들웨어 express.json() 을 이용해 문자열로 넘어온 요청들을 다시 json 형식으로 바꾼다( 디코딩한다,)
