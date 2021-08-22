@@ -19,11 +19,9 @@ export default class HomeContainer extends React.Component {
         data: { results: nowPlaying },
         //results 값을 nowPlaying에 할당
       } = await moviesApi.nowPlaying();
-      console.log(nowPlaying);
       const {
         data: { results: upcoming },
       } = await moviesApi.upcoming();
-      console.log(upcoming);
       const {
         data: { results: popular },
       } = await moviesApi.popular();
