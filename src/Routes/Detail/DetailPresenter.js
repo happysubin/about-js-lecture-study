@@ -41,6 +41,32 @@ const Cover = styled.div`
   border-radius: 5px;
 `;
 
+const Data = styled.div`
+  width: 70%;
+  margin-left: 10px;
+`;
+
+const Title = styled.h3`
+  font-size: 32px;
+`;
+
+const ItemContainer = styled.div`
+  margin: 20px 0;
+`;
+
+const Item = styled.span``;
+
+const Divider = styled.span`
+  margin: 0 10px;
+`;
+
+const Overview = styled.p`
+  font-size: 12px;
+  opacity: 0.7;
+  line-height: 1.5;
+  width: 50%;
+`;
+
 const DetailPresenter = ({ result, error, loading }) =>
   loading ? (
     <Loader />
@@ -57,6 +83,28 @@ const DetailPresenter = ({ result, error, loading }) =>
               : require("../../assets/noPosterSmall.jpg").default
           }
         />
+        <Data>
+          <Title>
+            {result.original_title
+              ? result.original_title
+              : result.original_name}
+          </Title>
+          <ItemContainer>
+            <Item>
+              {result.runtime ? result.runtime : result.episode_run_time[0]} min
+            </Item>
+            <Divider>•</Divider>
+            <Item>
+              {result.genres &&
+                result.genres.map((genre, index) =>
+                  index === result.genres.length - 1
+                    ? genre.name
+                    : `${genre.name} / `
+                )}
+            </Item>
+          </ItemContainer>
+          <Overview>{result.overview}</Overview>
+        </Data>
       </Content>
     </Container>
   );
