@@ -112,3 +112,4 @@ http 헤더는 요청에 세부사항, 옵션들을 포함하고 있다.
 그러므로 오브젝트에 정보를 담아서 넘길때 JSON.stringfy 를 이용해 문자열로 변환해서 넘긴다.
 headers 안에 "Content-Type": "application/json"우리가 넘긴 파일이 json 형식임을 알려준다.
 미들웨어 express.json() 을 이용해 문자열로 넘어온 요청들을 다시 json 형식으로 바꾼다( 디코딩한다,)
+html element 들을 이용해서 즉석에서 fake 댓글들을 구현. 그러나 그냥 element들을 input value에서 가져온 것들로 잠깐 만드는거지 db에서 가져온 데이터를 렌더링하는 것이 아니다!
