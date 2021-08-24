@@ -1,5 +1,7 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
+const deleteBtn = document.querySelectorAll(".deleteBtn");
+const comment = document.q;
 
 const addComment = (text, id) => {
   const videoComments = document.querySelector(".video__comments ul");
@@ -10,7 +12,7 @@ const addComment = (text, id) => {
   icon.className = "fas fa-comment";
   const span = document.createElement("span");
   span.innerText = ` ${text}`;
-  const span2 = document.createElement("span");
+  const span2 = document.createElement("button");
   span2.innerText = "❌";
   newComment.appendChild(icon);
   newComment.appendChild(span);
@@ -42,7 +44,28 @@ const handleSubmit = async (event) => {
   }
 };
 
+const deleteComment = async (event) => {
+  const commentId = event.target.parentNode.dataset.id;
+  const videoId = videoContainer.dataset.id;
+  await fetch(`/api/videos/${videoId}/comment`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ commentId }),
+  });
+  const li = event.target.parentNode;
+  console.log(li);
+  console.log(event.target.parentNode.parentNode);
+  event.target.parentNode.parentNode.removeChild(li);
+};
+
 //두번째 해결방법 form이 있는 지 검사
 if (form) {
   form.addEventListener("submit", handleSubmit);
+}
+
+if (deleteBtn) {
+  console.log(deleteBtn);
+  for (let i = 0; i < deleteBtn.length; i++) {
+    deleteBtn[i].addEventListener("click", deleteComment);
+  }
 }
