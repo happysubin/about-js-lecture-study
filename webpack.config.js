@@ -10,7 +10,8 @@ module.exports = {
     //스크립트 태그가 layout.pug 에 있는데 메인화면은 비디오도 안돌리는데 비디오 관련 js 코드를 가져올 이유가 없다!
   },
   // 소스코드들을 모아둔 폴더를 엔트리라고 칭한다!
-  mode: "development", //모드가 개발중이다! 즉 아직 개발중이다 를 의미 (default 값은 production mode이다  완성되었으면 production mode를 사용)
+  //mode: "development", //모드가 개발중이다! 즉 아직 개발중이다 를 의미 (default 값은 production mode이다  완성되었으면 production mode를 사용)
+  //watch: true,
   output: {
     //webpack 은 절대경로를 요구한다!!!!!!
     filename: "js/[name].js", //[name]은 웹팩이 제공하는 변수!entry에 있는 이름을 가져온다
@@ -20,7 +21,7 @@ module.exports = {
     //2. npm run assets 를 통해 assets js 폴더도 생기고 main.js 라는 파일도 자동으로 생겼다.
     clean: true, //이걸로 시작할때마다 다 지우고 assets를 만들고 main.js 랑 main.css 도 다시 작성한다
   },
-  watch: true,
+
   plugins: [
     new MiniCssExtractPlugin({
       filename: "css/main.css",
