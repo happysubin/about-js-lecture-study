@@ -1,5 +1,6 @@
 const videoContainer = document.querySelector(".video-Container");
 const form = document.getElementById("commentForm");
+const deleteBtn = document.getElementsByClassName("deleteBtn");
 
 const addComment = (text, id) => {
   const videoComments = document.querySelector(".video__comments ul");
@@ -37,6 +38,23 @@ const handleSubmit = async (event) => {
   }
 };
 
+const handleDeleteComment = async (event) => {
+  //console.log(event.target.parentNode.dataset.id);
+  const commentId = event.target.parentNode.dataset.id;
+  await fetch(`/api/videos/${commentId}/comment`, {
+    method: "DELETE",
+  });
+  const li = event.target.parentNode;
+  event.target.parentNode.parentNode.removeChild(li);
+};
+
 if (form) {
   form.addEventListener("submit", handleSubmit);
+}
+
+if (deleteBtn) {
+  //console.log(deleteBtn); //배열 형태로 나온다
+  for (let i = 0; i < deleteBtn.length; i++) {
+    deleteBtn[i].addEventListener("click", handleDeleteComment);
+  }
 }

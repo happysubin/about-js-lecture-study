@@ -1,9 +1,16 @@
 import express from "express";
-import { createComment, registerView } from "../Controller/videoController";
+import {
+  createComment,
+  deleteComment,
+  registerView,
+} from "../Controller/videoController";
 
 const apiRouter = express.Router();
 
 apiRouter.post("/videos/:id/view", registerView);
-apiRouter.post("/videos/:id/comment", createComment);
+apiRouter
+  .route("/videos/:id/comment")
+  .post(createComment)
+  .delete(deleteComment);
 
 export default apiRouter;
