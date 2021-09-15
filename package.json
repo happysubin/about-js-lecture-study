@@ -18,6 +18,7 @@
   "homepage": "https://github.com/happysubin/begin-GraphQL#readme",
   "dependencies": {
     "@babel/cli": "^7.15.4",
+    "axios": "^0.21.4",
     "graphql-yoga": "^1.18.3",
     "nodemon": "^2.0.12"
   },
