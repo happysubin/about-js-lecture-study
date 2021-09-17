@@ -1,0 +1,20 @@
+import { ApolloServer, gql } from "apollo-server";
+
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`;
+
+const resolvers = {
+  Query: {
+    hello: () => "babe",
+  },
+};
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
+server.listen().then(() => console.log("Server is run!!!!!!!!!!1"));
