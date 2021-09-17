@@ -9,9 +9,11 @@ const GET_MOVIES = gql`
     movies {
       id
       medium_cover_image
+      isLiked @client
     }
   }
 `;
+//@client 를 이용해 클라이언트에 이게 있다고 알려준다.
 
 const Container = styled.div`
   display: flex;
@@ -65,7 +67,12 @@ export default () => {
       {!loading && data.movies && (
         <Movies>
           {data.movies.map((m) => (
-            <Movie key={m.id} id={m.id} bg={m.medium_cover_image} />
+            <Movie
+              key={m.id}
+              id={m.id}
+              isLiked={m.isLiked}
+              bg={m.medium_cover_image}
+            />
           ))}
         </Movies>
       )}
