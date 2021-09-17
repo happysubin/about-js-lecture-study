@@ -26,6 +26,7 @@ const Container = styled.div`
 
 const Column = styled.div`
   margin-left: 10px;
+  width: 50%;
 `;
 
 const Title = styled.h1`
@@ -55,11 +56,19 @@ export default () => {
   return (
     <Container>
       <Column>
-        <Title>Name</Title>
-        <Subtitle>English · 4.5</Subtitle>
-        <Description>lorem ipsum lalalla </Description>
+        <Title>{loading ? "Loading..." : data.movie.title}</Title>
+        {!loading && data.movie && (
+          <>
+            <Subtitle>
+              {data.movie.language} · {data.movie.rating}
+            </Subtitle>
+            <Description>{data.movie.description_intro}</Description>
+          </>
+        )}
       </Column>
-      <Poster></Poster>
+      <Poster
+        bg={data && data.movie ? data.movie.medium_cover_image : ""}
+      ></Poster>
     </Container>
   );
 };
