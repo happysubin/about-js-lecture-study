@@ -10,13 +10,12 @@ const client = new ApolloClient({
       //local state를 바꾸려면 mutation 이 필요하다
     },
     Mutation: {
-      likeMovie: (_, { id }, { cache }) => {
+      toggleLikeMovie: (_, { id, isLiked }, { cache }) => {
         cache.modify({
           //이 메소드를 이용해 캐시를 쓸 수 있다.
           id: `Movie:${id}`, //지금 오브젝트 구조가 api의 데이터 구성과 똑같다. 바꿔치려면 똑같아야지!
           fields: {
-            isLiked: true, //데이터를 변경!!
-            medium_cover_image: "Awesome!!!!!lol", //너도 변경!!!
+            isLiked: !isLiked, //데이터를 변경!!
           },
         });
       },
