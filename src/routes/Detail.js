@@ -11,6 +11,10 @@ const GET_MOVIE = gql`
       rating
       description_intro
     }
+    suggestions(id: $id) {
+      id
+      medium_cover_image
+    }
   }
 `;
 
@@ -60,18 +64,20 @@ export default () => {
         {!loading && data.movie && (
           <>
             <Subtitle>
-              {data.movie.language} · {data.movie.rating}
+              {data?.movie?.language} · {data?.movie?.rating}
             </Subtitle>
-            <Description>{data.movie.description_intro}</Description>
+            <Description>{data?.movie?.description_intro}</Description>
           </>
         )}
       </Column>
-      <Poster
-        bg={data && data.movie ? data.movie.medium_cover_image : ""}
-      ></Poster>
+      <Poster bg={data?.movie?.medium_cover_image}></Poster>
     </Container>
   );
 };
+
+//옵셔널 체이닝
+// data && data.movies && data.movies.map() === {data?.movie?.map()} 와 같다. 밖에 걸 검사하고 있으면 그 객체의 내부 프로퍼티를 있는지 검사
+//계속 이렇게 파고들어가면서 있는지 없는 지 검사한다.
 
 /*
  query getMovie($id: Int!) { //아폴로를 위한 코드다. 아폴로가 변수의 타입을 검사. 그리고 실제 변수를 넣어줌. 변수형에서 느낌표 주의!!!
