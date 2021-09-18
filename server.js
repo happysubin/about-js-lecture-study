@@ -1,36 +1,45 @@
+import { PrismaClient } from "@prisma/client";
 import { ApolloServer, gql } from "apollo-server";
+
+const client = new PrismaClient();
 
 const typeDefs = gql`
   type Movie {
-    title: String
-    year: Int
+    id: Int!
+    title: String!
+    year: Int!
+    genre: String
+    createdAt: String!
+    updatedAt: String!
   }
   type Query {
     movies: [Movie]
-    movie: Movie
+    movie(id: Int!): Movie
   }
   type Mutation {
-    createMovie(title: String!): Boolean
-    deleteMovie(title: String!): Boolean
+    createMovie(title: String!, year: Int!, genre: String): Movie
+    deleteMovie(id: Int!): Boolean
   }
 `;
 
 const resolvers = {
   Query: {
-    movies: () => [],
-    movie: () => ({ title: "hello", year: 2021 }),
+    movies: () => client.movie.findMany(),
+    movie: (_, id) => ({ title: "hello", year: 2021 }),
   },
   Mutation: {
-    createMovie: (root, { title }, info, context) => {
-      console.log(root);
-      console.log(info);
-      console.log(context);
-      console.log(title);
-      return true;
-    },
+    createMovie: (_, { title, year, genre }) =>
+      client.movie.create({
+        data: {
+          title,
+          year,
+          genre,
+        },
+      }),
+
     //리졸버와 스키마의 프로퍼티 순서도 아예 같아야한다!
     //createMovie:(root,args,info,context)=>{},
-    deleteMovie: (_, { title }) => {
+    deleteMovie: (_, { id }) => {
       console.log(title);
       return true;
     },
