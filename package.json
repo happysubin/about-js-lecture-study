@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/happysubin/Insta-Backend-build-Prisma-with-Graphql#readme",
   "dependencies": {
+    "@prisma/client": "^3.0.2",
     "apollo-server": "^3.3.0",
-    "graphql": "^15.5.3"
+    "graphql": "^15.5.3",
+    "prisma": "^3.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
