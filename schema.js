@@ -13,8 +13,6 @@ const loadedResolvers = loadFilesSync(
 const typeDefs = mergeTypeDefs(loadedTypes);
 const resolvers = mergeResolvers(loadedResolvers); //값을 확인
 
-console.log(typeDefs);
-
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 //////////////////////////////
