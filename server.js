@@ -1,7 +1,7 @@
 require("dotenv").config();
 import { ApolloServer } from "apollo-server";
 import schema from "./schema";
-import { getUser, portectResolver } from "./users/users.utils";
+import { getUser } from "./users/users.utils";
 
 const server = new ApolloServer({
   schema,
@@ -9,7 +9,6 @@ const server = new ApolloServer({
     //console.log(req.headers.authorization);
     return {
       loggedInUser: await getUser(req.headers.authorization),
-      portectResolver,
     };
   },
 });

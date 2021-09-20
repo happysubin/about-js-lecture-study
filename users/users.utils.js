@@ -17,8 +17,14 @@ export const getUser = async (token) => {
   }
 };
 
-export const portectResolver = (user) => {
-  if (user) {
-    return new Error("You need to login.");
-  }
-};
+//함수를 인자로 받음 그리고 그 함수에 대한 것을 정의하는거임 함수안 함수
+export const protectedResolvers =
+  (ourResolvers) => (root, args, context, info) => {
+    if (!context.loggedInUser) {
+      return {
+        ok: false,
+        error: "Please log in to perform this action.",
+      };
+    }
+    return ourResolvers(root, args, context, info);
+  };
