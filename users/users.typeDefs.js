@@ -10,26 +10,6 @@ export default gql`
     createdAt: String!
     updatedAt: String!
   }
-  type LoginResult {
-    ok: Boolean!
-    token: String
-    error: String
-  }
-
-  type Mutation {
-    createAccount(
-      firstName: String!
-      lastName: String
-      username: String!
-      email: String!
-      password: String!
-    ): User
-    login(username: String!, password: String!): LoginResult
-  }
-
-  type Query {
-    seeProfile(username: String): User
-  }
 `;
 
 //!는 필수라는 소리

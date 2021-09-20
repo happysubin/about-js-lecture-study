@@ -1,7 +1,6 @@
 //export default 로 내보내야해!!!
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import client from "../client";
+import client from "../../client";
 
 export default {
   Mutation: {
@@ -29,7 +28,7 @@ export default {
         // hash password
         const hashPassword = await bcrypt.hash(password, 10); // 해싱
         // save and return the user
-        return client.user.create({
+        await client.user.create({
           data: {
             //이렇게 data로 저장하는걸 주의!!!
             username,
@@ -39,31 +38,16 @@ export default {
             password: hashPassword,
           },
         });
+        return {
+          ok: true,
+          error: null,
+        };
       } catch (e) {
-        return e;
-      }
-    },
-    login: async (_, { username, password }) => {
-      const user = await client.user.findFirst({ where: { username } });
-      if (!user) {
         return {
           ok: false,
-          error: "User not found.",
+          e,
         };
       }
-      const passwordCheck = await bcrypt.compare(password, user.password);
-      if (!passwordCheck) {
-        return {
-          ok: false,
-          error: "password is wrong",
-        };
-      }
-      const token = await jwt.sign({ id: user.id }, process.env.SECRET_KEY);
-
-      return {
-        ok: true,
-        token,
-      };
     },
   },
 };

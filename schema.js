@@ -7,7 +7,7 @@ const loadedTypes = loadFilesSync(`${__dirname}/**/*.typeDefs.js`);
 
 const loadedResolvers = loadFilesSync(
   //loadFileSynce 가 export default 를 가져온다
-  `${__dirname}/**/*.{queries,mutations}.js` //패턴 랭귀지 glob  **은 모든 폴더 안이라는 뜻 *는 파일을 의미.
+  `${__dirname}/**/*.resolvers.js` //패턴 랭귀지 glob  **은 모든 폴더 안이라는 뜻 *는 파일을 의미.
 );
 
 const typeDefs = mergeTypeDefs(loadedTypes);
