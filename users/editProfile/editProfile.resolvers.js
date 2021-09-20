@@ -7,9 +7,10 @@ export default {
     editProfile: async (
       _,
       { firstName, lastName, username, email, password: newPassword },
-      { loggedInUser }
+      { loggedInUser, portectResolver }
     ) => {
       // 우리의 토큰을 해독하는 역할을 함. 그럼 우리가 sing 메소드를 사용할때 썼던 유저 아이디가 나온다.
+      protectResolver(loggedInUser);
       console.log("loggedINUSER", loggedInUser);
       let hashPassword = null;
       if (newPassword) {

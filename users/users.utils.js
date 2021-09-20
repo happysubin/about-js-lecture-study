@@ -16,3 +16,9 @@ export const getUser = async (token) => {
     return null;
   }
 };
+
+export const portectResolver = (user) => {
+  if (user) {
+    return new Error("You need to login.");
+  }
+};
