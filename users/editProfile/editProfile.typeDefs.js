@@ -15,3 +15,4 @@ export default gql`
     ): EditProfileResult
   }
 `;
+//전부다 필수적이지 않음. 선택적 요소임
