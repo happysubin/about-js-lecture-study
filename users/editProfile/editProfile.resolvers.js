@@ -1,21 +1,22 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+
 import client from "../../client";
 
 export default {
   Mutation: {
     editProfile: async (
       _,
-      { firstName, lastName, username, email, password: newPassword, token }
+      { firstName, lastName, username, email, password: newPassword },
+      { loggedInUser }
     ) => {
-      const { id } = await jwt.verify(token, process.env.SECRET_KEY);
       // 우리의 토큰을 해독하는 역할을 함. 그럼 우리가 sing 메소드를 사용할때 썼던 유저 아이디가 나온다.
+      console.log("loggedINUSER", loggedInUser);
       let hashPassword = null;
       if (newPassword) {
         hashPassword = await bcrypt.hash(newPassword, 10);
       }
       const updateUser = await client.user.update({
-        where: { id }, //토큰에서 가져온 아이디로 업데이트 한다
+        where: { id: loggedInUser.id }, //토큰에서 가져온 아이디로 업데이트 한다
         data: {
           firstName,
           lastName,
