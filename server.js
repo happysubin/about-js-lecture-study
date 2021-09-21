@@ -5,6 +5,7 @@ import { graphqlUploadExpress } from "graphql-upload";
 import { typeDefs, resolvers } from "./schema";
 import { getUser } from "./users/users.utils";
 import express from "express";
+import morgan from "morgan";
 
 const port = process.env.PORT;
 
@@ -24,12 +25,13 @@ const startServer = async () => {
   });
   await server.start();
   const app = express();
+  app.use("/static", express.static("uploads"));
   app.use(graphqlUploadExpress());
   server.applyMiddleware({ app });
-
-  await new Promise((r) => app.listen({ port }, r));
-
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+  app.use(morgan("dev"));
+  app.listen(port, () =>
+    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  );
 };
 
 //graphql에는 4가지 파라미터가 존재함. root args context info. context는 apolloServer이 인자로 받아들임.
