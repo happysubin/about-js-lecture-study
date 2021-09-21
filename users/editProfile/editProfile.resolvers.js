@@ -5,7 +5,7 @@ import { protectedResolvers } from "../users.utils";
 
 const resolverFunction = async (
   _,
-  { firstName, lastName, username, email, password: newPassword },
+  { firstName, lastName, username, email, password: newPassword, bio, avatar },
   { loggedInUser }
 ) => {
   // 우리의 토큰을 해독하는 역할을 함. 그럼 우리가 sing 메소드를 사용할때 썼던 유저 아이디가 나온다.
@@ -22,6 +22,8 @@ const resolverFunction = async (
       lastName,
       username,
       email,
+      bio,
+      avatar,
       ...(hashPassword && { password: hashPassword }),
       //문법 설명 앞에 조건이 트루이면 뒤에 오브젝트를 리턴. 그러면 ...연산자를 이용해 오브젝트 내부의 값들이 다나온다.
       //앞에 해쉬화된 비번이  null이 아니라면 뒤에 오브젝트를
