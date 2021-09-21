@@ -5,6 +5,15 @@ export default gql`
     ok: Boolean!
     error: String
   }
+
+  scalar Upload
+
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
+
   type Mutation {
     editProfile(
       firstName: String
@@ -13,7 +22,7 @@ export default gql`
       email: String
       password: String
       bio: String
-      avatar: String
+      avatar: Upload
     ): EditProfileResult
   }
 `;

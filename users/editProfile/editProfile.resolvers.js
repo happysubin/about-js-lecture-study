@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-
+import { GraphQLUpload } from "graphql-upload";
 import client from "../../client";
 import { protectedResolvers } from "../users.utils";
 
@@ -9,7 +9,7 @@ const resolverFunction = async (
   { loggedInUser }
 ) => {
   // 우리의 토큰을 해독하는 역할을 함. 그럼 우리가 sing 메소드를 사용할때 썼던 유저 아이디가 나온다.
-
+  console.log("avatar", avatar);
   console.log("loggedINUSER", loggedInUser);
   let hashPassword = null;
   if (newPassword) {
@@ -37,6 +37,7 @@ const resolverFunction = async (
 };
 
 export default {
+  Upload: GraphQLUpload,
   Mutation: {
     editProfile: protectedResolvers(resolverFunction),
   },
