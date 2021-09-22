@@ -3,6 +3,18 @@ import client from "../../client";
 export default {
   Query: {
     seeFollowers: async (_, { username, page }) => {
+      const ok = await client.user.findUnique({
+        where: { username },
+        select: { id: true },
+      });
+      //select는 특정 필드를 선택한다
+      //투머치한 정보를 가져오지 않기 위해서다. 우리는 정보를 가져오는게 아니라 존재하는것만 확인하면 된다.
+      if (!ok) {
+        return {
+          ok: false,
+          error: "User not found",
+        };
+      }
       const followers = await client.user //유저를 찾아 그 유저의 팔로우 리스트를 다 가져옴
         .findUnique({ where: { username } })
         .followers({
@@ -19,9 +31,14 @@ export default {
       console.log(bFollowers);
       //둘다 잘 작동!
       */
+
+      const totalFollowers = client.user.count({
+        where: { following: { some: username } }, //유저네임을 팔로우한 사람들의 숫자를 세버린다.
+      });
       return {
         ok: true,
         followers,
+        totalPages: Math.ceil(totalFollowers / 5),
       };
     },
   },
