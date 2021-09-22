@@ -13,7 +13,13 @@ export default gql`
     avatar: String
     followers: [User]
     following: [User]
+    totalFollowers: Int
+    totalFollowing: Int
+    isMe: Boolean!
   }
 `;
 
 //!는 필수라는 소리
+
+//isFollowing: Boolean! 팔로우를 했는지 안했는지
+//isMe: Boolean! 나인지 아닌지 구별
