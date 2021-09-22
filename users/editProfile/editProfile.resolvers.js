@@ -10,8 +10,8 @@ const resolverFunction = async (
   { loggedInUser }
 ) => {
   // 우리의 토큰을 해독하는 역할을 함. 그럼 우리가 sing 메소드를 사용할때 썼던 유저 아이디가 나온다.
-  console.log("avatar", avatar);
-  console.log("loggedINUSER", loggedInUser);
+  //console.log("avatar", avatar);
+  //console.log("loggedINUSER", loggedInUser);
   let avatarUrl = null;
   if (avatar) {
     const { filename, createReadStream } = await avatar; //파일 종류 이름 ,createReadStream, encoding 프로퍼티가 있다.
