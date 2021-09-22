@@ -14,6 +14,18 @@ export default {
       }
       return root?.id === context?.loggedInUser?.id; //리퀘스트된 유저와 로그인한 내가 같다면 그것은 나다!즉 프로필을 수정할 권한을 줄거야 미래에
     },
+
+    isFollowing: async ({ id }, _, { loggedInUser }) => {
+      //팔로우를 했는지 안했는지 체크
+      if (!loggedInUser) {
+        return false;
+      }
+      const exists = await client.user.count({
+        where: { username: loggedInUser.username, following: { some: { id } } },
+      });
+      return Boolean(exists);
+      //1. 로그인된 유저를 찾고 로그인한 유저 팔로잉안에서 해당 인물을 팔로잉했는지 안했는지 체크
+    },
   },
 };
 
