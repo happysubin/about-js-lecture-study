@@ -39,6 +39,7 @@
     "@babel/node": "^7.15.4",
     "@babel/preset-env": "^7.15.6",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "prettier-plugin-prisma": "^3.1.1"
   }
 }

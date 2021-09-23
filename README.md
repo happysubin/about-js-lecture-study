@@ -2,10 +2,10 @@
 
 기능
 
-- [ ] Create Account
-- [ ] See Profile
-- [ ] Login
-- [ ] Edit Profile
-- [ ] Follow User
-- [ ] Unfollow User
-- [ ] Change Avatar (Image Upload)
+- [x] Create Account
+- [x] See Profile
+- [x] Login
+- [x] Edit Profile
+- [x] Follow User
+- [x] Unfollow User
+- [x] Change Avatar (Image Upload)
