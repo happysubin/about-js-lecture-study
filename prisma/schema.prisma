@@ -10,17 +10,39 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User{
-  id Int @id @default(autoincrement())
+model User {
+  id        Int      @id @default(autoincrement())
   firstName String
-  lastName String ? //필수가 아니라는 뜻
-  bio String ?
-  avatar String ?  //DB에는 이미지를 직접적으로 저장 ㄴㄴ . url을 저장. 이미지는 하드디스크에!
-  username String @unique
-  password String 
-  email String @unique
-  followers User[] @relation("FollowRelation",references: [id]) 
-  following User[] @relation("FollowRelation",references: [id])
+  lastName  String? //필수가 아니라는 뜻
+  bio       String?
+  avatar    String? //DB에는 이미지를 직접적으로 저장 ㄴㄴ . url을 저장. 이미지는 하드디스크에!
+  username  String   @unique
+  password  String
+  email     String   @unique
+  Photos    Photo[]
+  followers User[]   @relation("FollowRelation", references: [id])
+  following User[]   @relation("FollowRelation", references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Photo {
+  id        Int       @id @default(autoincrement())
+  user      User      @relation(fields: [userId], references: [id])
+  file      String
+  caption   String?
+  hashtags  Hashtag[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  userId    Int
+}
+
+model Hashtag {
+  id        Int      @id @default(autoincrement())
+  hashtag   String
+  photos    Photo[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 실제로 userId를 저장한다. photos 와 user는 실제로 DB에 저장되지 않는다. 관계를 명시하기 위한것. userId 가 저장된다.
