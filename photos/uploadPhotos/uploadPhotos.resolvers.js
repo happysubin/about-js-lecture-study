@@ -5,7 +5,7 @@ import { protectedResolvers } from "../../users/users.utils";
 
 const uploadPhotoLogic = async (_, { file, caption }, { loggedInUser }) => {
   let photoUrl = null;
-  let hashtags;
+  let hashtagObj = [];
   if (file) {
     const { filename, createReadStream } = await file; //파일 종류 이름 ,createReadStream, encoding 프로퍼티가 있다.
     const readStream = createReadStream();
@@ -20,23 +20,29 @@ const uploadPhotoLogic = async (_, { file, caption }, { loggedInUser }) => {
     console.log(photoUrl);
   }
   if (caption) {
-    hashtags = caption.match(/#[\w]+/g);
+    const hashtags = caption.match(/#[\w]+/g);
+    hashtagObj = hashtags.map((hashtag) => ({
+      where: { hashtag },
+      create: { hashtag },
+    }));
   }
 
-  await client.photo.create({
+  return client.photo.create({
     data: {
-      file,
+      file: photoUrl,
       caption,
-      hashtags: {
-        connectOrCreate:{ //필드 값이 유니크해야 사용가능. 이름 값 함.
-          where:{
-            hashtag:"#food"
-          }
-          ,create{
-            hashtags:"#food"
-          }
-        }
+      user: {
+        connect: {
+          id: loggedInUser.id,
+        },
       },
+      ...(hashtagObj.length > 0 && {
+        //해쉬태그가 있을때만
+        hashtags: {
+          connectOrCreate: hashtagObj,
+          //필드 값이 유니크해야 사용가능. 이름 값 함.
+        },
+      }),
     },
   });
 };
