@@ -1,10 +1,11 @@
 import { GraphQLUpload } from "graphql-upload";
 import { createWriteStream } from "fs";
+import client from "../../client";
 import { protectedResolvers } from "../../users/users.utils";
 
 const uploadPhotoLogic = async (_, { file, caption }, { loggedInUser }) => {
   let photoUrl = null;
-
+  let hashtags;
   if (file) {
     const { filename, createReadStream } = await file; //파일 종류 이름 ,createReadStream, encoding 프로퍼티가 있다.
     const readStream = createReadStream();
@@ -18,6 +19,26 @@ const uploadPhotoLogic = async (_, { file, caption }, { loggedInUser }) => {
     //그래서 파일이 아닌 파일의 경로를  db에 저장해서 제공한다
     console.log(photoUrl);
   }
+  if (caption) {
+    hashtags = caption.match(/#[\w]+/g);
+  }
+
+  await client.photo.create({
+    data: {
+      file,
+      caption,
+      hashtags: {
+        connectOrCreate:{ //필드 값이 유니크해야 사용가능. 이름 값 함.
+          where:{
+            hashtag:"#food"
+          }
+          ,create{
+            hashtags:"#food"
+          }
+        }
+      },
+    },
+  });
 };
 
 export default {
