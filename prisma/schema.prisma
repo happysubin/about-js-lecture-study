@@ -28,7 +28,7 @@ model User {
 
 model Photo {
   id        Int       @id @default(autoincrement())
-  user      User      @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id]) //프리즈마 스튜디오에서 이 데이터 속성을 위한 칼럼이 없는거를 확인 가능 그러나 디비에서 관계를 정의한 테이블 확인가능!
   file      String
   caption   String?
   hashtags  Hashtag[]
