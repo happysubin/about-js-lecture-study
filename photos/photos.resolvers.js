@@ -3,7 +3,9 @@ import client from "../client";
 export default {
   Photo: {
     user: ({ userId }) => client.user.findUnique({ where: { id: userId } }),
-    hashtags: ({ id }) =>
+    hashtags: (
+      { id } //root는 request된 사진
+    ) =>
       client.hashtag.findMany({
         where: {
           photos: {
