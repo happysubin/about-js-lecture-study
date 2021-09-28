@@ -17,4 +17,19 @@ export default {
         },
       }),
   },
+  Hashtag: {
+    photos: ({ id }, { page }, { loggedInUser }) => {
+      return client.hashtag
+        .findUnique({
+          where: {
+            id,
+          },
+        })
+        .photos(); //이러면 해당 해시태그에 모든 사진을 불러온다
+    },
+
+    totalPhotos: (
+      { id } //parent 에서 id를 꺼낸다
+    ) => client.photo.count({ where: { hashtags: { some: { id } } } }),
+  }, //이 아이디를 가진 해시태그가 해시태그리스트에 포함돼있는 사진들을모두 새도록 할 거얌
 };
