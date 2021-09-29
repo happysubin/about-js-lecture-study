@@ -2,6 +2,7 @@ import { GraphQLUpload } from "graphql-upload";
 import { createWriteStream } from "fs";
 import client from "../../client";
 import { protectedResolvers } from "../../users/users.utils";
+import { processHashtag } from "../photos.utils";
 
 const uploadPhotoLogic = async (_, { file, caption }, { loggedInUser }) => {
   let photoUrl = null;
@@ -20,11 +21,7 @@ const uploadPhotoLogic = async (_, { file, caption }, { loggedInUser }) => {
     console.log(photoUrl);
   }
   if (caption) {
-    const hashtags = caption.match(/#[\w]+/g);
-    hashtagObj = hashtags.map((hashtag) => ({
-      where: { hashtag },
-      create: { hashtag },
-    }));
+    hashtagObj = processHashtags(caption);
   }
 
   return client.photo.create({
