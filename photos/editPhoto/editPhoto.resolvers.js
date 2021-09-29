@@ -14,10 +14,18 @@ const editPhotoLogic = async (_, { id, caption }, { loggedInUser }) => {
       error: "Photo not found.",
     };
   }
+
   const photo = await client.photo.update({
     where: { id },
-    data: { caption, hashtags: { disconnect: oldPhoto.hashtags,connectOrCreate:processHashtag(caption)} } }, //edit하기 이전의 사진 해쉬태그를 모두 삭제
+    data: {
+      caption,
+      hashtags: {
+        disconnect: oldPhoto.hashtags,
+        connectOrCreate: processHashtag(caption),
+      },
+    },
   });
+
   console.log(photo);
 };
 
