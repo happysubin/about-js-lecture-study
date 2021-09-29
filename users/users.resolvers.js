@@ -26,6 +26,7 @@ export default {
       return Boolean(exists);
       //1. 로그인된 유저를 찾고 로그인한 유저 팔로잉안에서 해당 인물을 팔로잉했는지 안했는지 체크
     },
+    photos: (user) => client.user.findUnique({ where: { id: user.id } }), //parent는 유저
   },
 };
 
