@@ -16,6 +16,7 @@ export default {
           },
         },
       }),
+    likes: ({ id }) => client.like.count({ where: { photoId: id } }), //사진의 아이디와 요청 받은 아이가 같다면 그 사진의 좋아요를 보여줌
   },
   Hashtag: {
     photos: ({ id }, { page }, { loggedInUser }) => {
