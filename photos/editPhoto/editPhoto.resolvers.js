@@ -26,7 +26,9 @@ const editPhotoLogic = async (_, { id, caption }, { loggedInUser }) => {
     },
   });
 
-  console.log(photo);
+  return {
+    ok: true,
+  };
 };
 
 export default {
