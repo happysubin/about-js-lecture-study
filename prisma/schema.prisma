@@ -11,20 +11,21 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   firstName String
   lastName  String? //필수가 아니라는 뜻
   bio       String?
   avatar    String? //DB에는 이미지를 직접적으로 저장 ㄴㄴ . url을 저장. 이미지는 하드디스크에!
-  username  String   @unique
+  username  String    @unique
   password  String
-  email     String   @unique
+  email     String    @unique
   Photos    Photo[]
-  followers User[]   @relation("FollowRelation", references: [id])
-  following User[]   @relation("FollowRelation", references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  followers User[]    @relation("FollowRelation", references: [id])
+  following User[]    @relation("FollowRelation", references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   likes     like[]
+  comment   Comment[]
 }
 
 model Photo {
@@ -37,6 +38,7 @@ model Photo {
   updatedAt DateTime  @updatedAt
   userId    Int
   likes     like[]
+  comment   Comment[]
 }
 
 model Hashtag {
@@ -63,3 +65,14 @@ model like {
 // @@unique([photoId, userId]) compound unique 복합 unique를 설정 두 가지 필드를 동시에 unique로 사용
 //좋아요는 한 번만!!!
 // 실제로 userId를 저장한다. photos 와 user는 실제로 DB에 저장되지 않는다. 관계를 명시하기 위한것. userId 가 저장된다.
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  photo     Photo    @relation(fields: [photoId], references: [id])
+  payload   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    Int
+  photoId   Int
+}
