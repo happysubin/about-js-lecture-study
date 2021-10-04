@@ -1,19 +1,63 @@
-class Human {
-  public name: string;
-  public age: number;
-  public married: boolean;
-  public gender: string;
-  constructor(name: string, age: number, married: boolean, gender: string) {
-    this.name = name;
-    this.age = age;
-    this.married = married;
-    this.gender = gender;
+import * as CryptoJS from "crypto-js";
+
+class Block {
+  public index: number;
+  public hash: string;
+  public previousHash: string;
+  public data: string;
+  public timestamp: number;
+
+  static calculateBlockHash = (
+    index: number,
+    priviousHash: string,
+    timestamp: number,
+    data: string
+  ): string =>
+    CryptoJS.SHA256(index + priviousHash + timestamp + data).toString();
+
+  constructor(
+    index: number,
+    hash: string,
+    previousHash: string,
+    data: string,
+    timestamp: number
+  ) {
+    this.index = index;
+    this.hash = hash;
+    this.previousHash = previousHash;
+    this.data = data;
+    this.timestamp = timestamp;
   }
 }
 
-const bin = new Human("bin", 24, false, "male");
+const genesisBlock: Block = new Block(0, "2020202020202", "", "Hello", 123456);
 
-const helloWorld = (person: Human): string =>
-  `${person.name}, ${person.age}, ${person.married}, ${person.gender} !!`; //반환 값을 알려준다
+let blockchain: Block[] = [genesisBlock];
 
-console.log(helloWorld(bin));
+const getChainBlock = (): Block[] => blockchain;
+
+const getLatestBlock = (): Block => blockchain[blockchain.length - 1];
+
+const getNewTimeStamp = (): number => Math.round(new Date().getTime() / 1000);
+
+const createBlock = (data: string): Block => {
+  const previousBlock: Block = getLatestBlock();
+  const newIndex: number = previousBlock.index + 1;
+  const newTimestamp: number = getNewTimeStamp();
+  const newHash: string = Block.calculateBlockHash(
+    newIndex,
+    previousBlock.hash,
+    newTimestamp,
+    data
+  );
+  const newBlock: Block = new Block(
+    newIndex,
+    newHash,
+    previousBlock.hash,
+    data,
+    newTimestamp
+  );
+  return newBlock;
+};
+
+console.log(createBlock("hoho"));
