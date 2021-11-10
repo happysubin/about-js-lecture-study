@@ -12,4 +12,9 @@ datasource db {
 
 model User{
   id Int @id @default(autoincrement())
+  password String
+  email String @unique
+  gender Int
+  birth String?
+  createdAt DateTime @default(now())
 }
