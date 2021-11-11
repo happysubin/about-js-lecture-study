@@ -16,6 +16,7 @@ export const createHashPassword = (originPassword) =>
   new Promise(async (resolve, reject) => {
     try {
       const salt = await createSalt();
+      //비밀번호, salt, 반복횟수, 출력바이트, 해시 알고리즘을 인수러 넣는다.
       crypto.pbkdf2(originPassword, salt, 10000, 64, "sha512", (err, key) => {
         if (err) throw err;
         resolve({ hashedPassword: key.toString("base64"), salt });
