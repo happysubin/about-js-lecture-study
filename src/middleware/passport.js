@@ -12,6 +12,7 @@ const passportConfig = { usernameField: "email", passwordField: "password" };
 
 //여기는 로그인 부분.
 passport.use(
+  "local",
   new LocalStrategy(passportConfig, async function (email, password, done) {
     try {
       const user = await prisma.user.findUnique({ where: { email } });
