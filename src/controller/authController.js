@@ -16,11 +16,12 @@ export default {
 
     res.json({ success: true });
   },
+
   login: (req, res, next) => {
-    passport.authenticate("local", { session: false }, (err, user) => {
-      if (err || !user) return res.status(400).end();
+    passport.authenticate("local", { session: false }, (err, user, info) => {
+      if (err || !user) return res.status(400).json({ message: info });
       req.login(user, { session: false }, (err) => {
-        if (error) {
+        if (err) {
           return res.status(400).json({
             message: "비밀번호와 메일을 확인하세요",
             user: user,
