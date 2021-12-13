@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test1": "mocha --watch Unit-basic/test/add.spec.js"
+    "test1": "mocha --watch Unit-basic/test/add.spec.js",
+    "test2": "mocha --watch Unit-basic/test/calculator.spec.js"
   },
   "repository": {
     "type": "git",
