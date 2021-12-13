@@ -42,6 +42,14 @@ describe("Calculator code test", function () {
     done();
   });
 
+  it("add Error", function (done) {
+    calc.set(6);
+    expect(() => {
+      calc.add(1000);
+    }).throw("100 이상 불가");
+    done();
+  });
+
   it("subtract", function (done) {
     calc.set(22);
     calc.subtract(9);

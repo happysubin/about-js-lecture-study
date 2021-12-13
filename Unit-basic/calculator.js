@@ -9,7 +9,11 @@ class Calculator {
     this.value = 0;
   }
   add(num) {
-    this.value += num;
+    const sum = this.value + num;
+    if (sum > 100) {
+      throw new Error("100 이상 불가");
+    }
+    this.value = sum;
   }
   subtract(num) {
     this.value -= num;
