@@ -8,7 +8,9 @@
     "test2": "mocha --watch Unit-basic/test/calculator.spec.js",
     "test3": "mocha --watch Unit-basic/test/promise.spec.js",
     "test4": "mocha --watch Mock/test/check.spec.js",
-    "test5": "mocha --watch Mock/product/test/**"
+    "test5": "mocha --watch Mock/product/test/**",
+    "test6": "mocha --watch Mock/user/test/**",
+    "test7": "mocha --watch unit-test/**"
   },
   "repository": {
     "type": "git",
