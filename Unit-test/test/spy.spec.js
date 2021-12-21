@@ -9,6 +9,8 @@ const MyClass = require("../MyClass");
 const chai = require("chai");
 const expect = chai.expect;
 const sinon = require("sinon");
+const chaiAsPromise = require("chai-as-promised");
+chai.use(chaiAsPromise);
 
 beforeEach(() => {
   myObj = new MyClass();
@@ -92,3 +94,18 @@ describe("Test suit for stub", () => {
 
 //stub는 DB 네트워크 관련 코드에서 복잡한 일을 대체하는 코드로 사용
 //즉 DB일을 stub가 대체하는 느낌!
+
+//Testing promise
+
+describe("Test the promise", () => {
+  it("Promise test case", () => {
+    /*myObj.testPromise().then((result) => {
+      expect(result).to.be.equal(6);
+      expect(false).to.be.false;
+      done();
+    });*/
+    return expect(myObj.testPromise()).to.eventually.equal(6);
+  });
+});
+
+//chai-as-Promised 라는 라이브러리를 사용. 이걸로 편하게 Promise 테스트 가능!
