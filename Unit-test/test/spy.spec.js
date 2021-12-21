@@ -14,7 +14,8 @@ beforeEach(() => {
   myObj = new MyClass();
 });
 
-describe("Test suit", () => {
+describe.skip("Test suit", () => {
+  //스킵은 말 그대로 스킵
   let myObj;
 
   beforeEach(() => {
@@ -69,4 +70,25 @@ describe("Test suit", () => {
 
   //모킹을 해서 sayHello의 콘솔로그 함수가 호출되지 않는다.
   //대신 호출은 검사는 스무스하게 흘러감
+  //좀 더 구체적인 테스트를 할 때 mock를 사용. 그러나 내부 로직을 직접 다 수행하지는 않음. 흐름만 수행한다라고 이행
 });
+
+/**
+ *
+ * stub 공부 시작
+ *
+ */
+
+describe("Test suit for stub", () => {
+  it("Stub the add method", () => {
+    const stub = sinon.stub(myObj, "add");
+    stub.withArgs(10, 20).returns(30); //이게 대신 수행해주나?
+
+    //stub returns 값에 따라 아래 equal 값이 달라진다. 위 코드에 종속되는 듯
+
+    expect(myObj.callAnotherFn(10, 20)).to.be.equal(30);
+  });
+});
+
+//stub는 DB 네트워크 관련 코드에서 복잡한 일을 대체하는 코드로 사용
+//즉 DB일을 stub가 대체하는 느낌!
