@@ -25,6 +25,12 @@ describe("Test suit", () => {
     expect(myObj.add(1, 2)).to.be.equal(3);
   });
 
+  /**
+   *
+   * sinon Spy 공부 시작
+   *
+   */
+
   it("Spy the add method", () => {
     const spy = sinon.spy(myObj, "add");
     const arg1 = 10,
@@ -43,4 +49,24 @@ describe("Test suit", () => {
     myObj.callTheCallback(callback);
     expect(callback.calledOnce).to.be.true; //한번 호출 되었다.
   });
+
+  /**
+   *
+   * mock 공부 시작
+   *
+   */
+
+  it("mock the sayHello back", () => {
+    const mock = sinon.mock(myObj);
+    const expectation = mock.expects("sayHello"); // 메소드 이름이 인자. 우리가 원하는 결과를 정의
+    const expectation2 = mock.expects("add");
+    expectation.exactly(1); //몇 번 호출되었는가
+    expectation.withArgs("Hello world"); //이 인자가 들어감
+    expectation2.exactly(1); //1번 호출되었다고 동일하게 나옴
+    myObj.callAnotherFn(10, 20);
+    mock.verify();
+  });
+
+  //모킹을 해서 sayHello의 콘솔로그 함수가 호출되지 않는다.
+  //대신 호출은 검사는 스무스하게 흘러감
 });
