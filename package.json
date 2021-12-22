@@ -10,7 +10,9 @@
     "test4": "mocha --watch Mock/test/check.spec.js",
     "test5": "mocha --watch Mock/product/test/**",
     "test6": "mocha --watch Mock/user/test/**",
-    "test7": "mocha --watch unit-test/**"
+    "test7": "mocha --watch unit-test/**",
+    "coverage1": "nyc --reporter html npm run test7",
+    "coverage2": "nyc --reporter=text npm run test7"
   },
   "repository": {
     "type": "git",
@@ -29,6 +31,7 @@
   },
   "dependencies": {
     "nock": "^13.2.1",
+    "nyc": "^15.1.0",
     "sinon": "^12.0.1",
     "xmlhttprequest": "^1.8.0"
   }

@@ -18,6 +18,10 @@ beforeEach(() => {
   myObj = new MyClass();
 });
 
+afterEach(() => {
+  sinon.reset();
+});
+
 describe.skip("Test suit", () => {
   //스킵은 말 그대로 스킵
   let myObj;
