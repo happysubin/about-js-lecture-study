@@ -12,6 +12,8 @@ const sinon = require("sinon");
 const chaiAsPromise = require("chai-as-promised");
 chai.use(chaiAsPromise);
 
+const nock = require("nock");
+
 beforeEach(() => {
   myObj = new MyClass();
 });
@@ -81,7 +83,7 @@ describe.skip("Test suit", () => {
  *
  */
 
-describe("Test suit for stub", () => {
+describe.skip("Test suit for stub", () => {
   it("Stub the add method", () => {
     const stub = sinon.stub(myObj, "add");
     stub.withArgs(10, 20).returns(30); //이게 대신 수행해주나?
@@ -97,7 +99,7 @@ describe("Test suit for stub", () => {
 
 //Testing promise
 
-describe("Test the promise", () => {
+describe.skip("Test the promise", () => {
   it("Promise test case", () => {
     /*myObj.testPromise().then((result) => {
       expect(result).to.be.equal(6);
@@ -109,3 +111,20 @@ describe("Test the promise", () => {
 });
 
 //chai-as-Promised 라는 라이브러리를 사용. 이걸로 편하게 Promise 테스트 가능!
+
+/**
+ *
+ *  nock 를 이용한 ajax 테스트 코드
+ *
+ */
+
+describe("XHR test suit", () => {
+  it("Mock and stub xhr call", async () => {
+    const scope = nock("https://echo-service-new.herokuapp.com") //도메인을 넣음
+      .post("/echo")
+      .reply(200, { id: 123 });
+    //mock stub처럼 네트워크 관련 작업을 진짜하지는 않고 로직을 수행
+    console.log(await myObj.xhrFn());
+    expect(myObj.xhrFn()).to.eventually.equal({ id: 123 });
+  });
+});
