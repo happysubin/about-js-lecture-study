@@ -1,0 +1,46 @@
+extends layout/layout.pug
+
+block content 
+    .video-Container(data-id=video._id)
+        video(src=`/${video.videoURL}`)
+        .video-Controller
+            button#playBtn Play
+            button#muteBtn Mute
+            input#volumeInput(type="range" value=0.5 min=0 max=1 step=0.1)
+            span#currentTime 00:00
+            span#totalTime 00:00
+            input#timeLine(type="range" step="1"  value="0"  min="0")
+            button#fullScreen full
+        a(href=`/user/${video.owner._id}`)
+            span.video-owner=`owner : ${video.owner.name}`
+        .video-explanation
+            span.video-title=video.title
+            span.video-description=video.description
+            span.video-createdAt=video.createdAt
+            each hashtag in video.hashtags
+                ul 
+                    li=hashtag
+                    //-여기가 오류 수정을 잘한듯 계속 .id 속성으로 찾으니 오류가 뜨지. user._id 전에 user 가 있는지 체크해서 오류를 잡았다.
+            if user
+                if String(user._id)===String(video.owner._id)
+                    a(href=`/video/${video.id}/delete`)
+                        button Delete video
+                    a(href=`/video/${video.id}/edit`)
+                        button Edit video
+    if loggedIn 
+        form#commentForm
+            textarea(cols="30", rows="10", placeholder="Write a nice commment...")
+            button Add Comment
+    div.video__comments
+        ul
+            each comment in video.comments.reverse()
+                li.video__comment(data-id=comment._id)
+                    i.fas.fa-comment
+                    span #{comment.text}
+                    if user 
+                        if String(comment.user) === String(user._id)
+                            button.deleteBtn ❌
+block script
+    script(src="/assets/js/video.js")
+    if loggedIn 
+        script(src="/assets/js/comment.js")

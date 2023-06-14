@@ -1,0 +1,19 @@
+header 
+    nav
+        a(href="/")
+            span Home 
+        a(href="/search")
+            span Search
+        if loggedIn
+            a(href="/video/upload") 
+                span upload
+            a(href="/user/logout")
+                span logout
+            a(href="/user/edit-profile")
+                span edit-profile
+        else 
+            a(href="/signUp") 
+                span sign up
+            a(href="/login") 
+                span Login
+

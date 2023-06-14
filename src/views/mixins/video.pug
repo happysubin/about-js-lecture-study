@@ -1,0 +1,12 @@
+mixin video(video)
+    div.video-list
+        a(href=`/video/${video._id}`)
+            span.video-title=video.title
+            span=video.meta.views
+            
+          
+
+
+
+
+//-home 에서 비디오를 보여준다.  
