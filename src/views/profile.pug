@@ -1,0 +1,12 @@
+extends layout 
+include mixins/video
+
+block content
+    div.profile_data 
+        img(src="/"+user.avatarUrl).avatarUrl
+        h3=user.name
+    div.video-grid
+        each video in user.videos
+            +video(video)
+        else
+            li Sorry nothing found. 
