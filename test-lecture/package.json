@@ -1,0 +1,38 @@
+{
+  "name": "test-code-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test1": "mocha --watch Unit-basic/test/add.spec.js",
+    "test2": "mocha --watch Unit-basic/test/calculator.spec.js",
+    "test3": "mocha --watch Unit-basic/test/promise.spec.js",
+    "test4": "mocha --watch Mock/test/check.spec.js",
+    "test5": "mocha --watch Mock/product/test/**",
+    "test6": "mocha --watch Mock/user/test/**",
+    "test7": "mocha --watch unit-test/**",
+    "coverage1": "nyc --reporter html npm run test7",
+    "coverage2": "nyc --reporter=text npm run test7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/happysubin/Test-code-practice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/happysubin/Test-code-practice/issues"
+  },
+  "homepage": "https://github.com/happysubin/Test-code-practice#readme",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^9.1.3"
+  },
+  "dependencies": {
+    "nock": "^13.2.1",
+    "nyc": "^15.1.0",
+    "sinon": "^12.0.1",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
