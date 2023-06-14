@@ -1,0 +1,30 @@
+{
+  "name": "begin-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/happysubin/begin-GraphQL.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/happysubin/begin-GraphQL/issues"
+  },
+  "homepage": "https://github.com/happysubin/begin-GraphQL#readme",
+  "dependencies": {
+    "@babel/cli": "^7.15.4",
+    "axios": "^0.21.4",
+    "graphql-yoga": "^1.18.3",
+    "nodemon": "^2.0.12"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
+    "@babel/preset-env": "^7.15.6"
+  }
+}
