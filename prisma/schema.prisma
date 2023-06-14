@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  firstName String
+  lastName  String? //필수가 아니라는 뜻
+  bio       String?
+  avatar    String? //DB에는 이미지를 직접적으로 저장 ㄴㄴ . url을 저장. 이미지는 하드디스크에!
+  username  String    @unique
+  password  String
+  email     String    @unique
+  Photos    Photo[]
+  followers User[]    @relation("FollowRelation", references: [id])
+  following User[]    @relation("FollowRelation", references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  likes     like[]
+  comment   Comment[]
+}
+
+model Photo {
+  id        Int       @id @default(autoincrement())
+  user      User      @relation(fields: [userId], references: [id]) //프리즈마 스튜디오에서 이 데이터 속성을 위한 칼럼이 없는거를 확인 가능 그러나 디비에서 관계를 정의한 테이블 확인가능!
+  file      String
+  caption   String?
+  hashtags  Hashtag[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  userId    Int
+  likes     like[]
+  comment   Comment[]
+}
+
+model Hashtag {
+  id        Int      @id @default(autoincrement())
+  hashtag   String   @unique //해쉬태그는 유니크
+  photos    Photo[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model like {
+  id        Int      @id @default(autoincrement())
+  photo     Photo    @relation(fields: [photoId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  photoId   Int
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  @@unique([photoId, userId])
+}
+
+// @@unique([photoId, userId]) compound unique 복합 unique를 설정 두 가지 필드를 동시에 unique로 사용
+//좋아요는 한 번만!!!
+// 실제로 userId를 저장한다. photos 와 user는 실제로 DB에 저장되지 않는다. 관계를 명시하기 위한것. userId 가 저장된다.
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  photo     Photo    @relation(fields: [photoId], references: [id])
+  payload   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    Int
+  photoId   Int
+}
