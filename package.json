@@ -1,0 +1,26 @@
+{
+  "name": "ts-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node index.ts",
+    "start": "tsc-watch --onSuccess \" node dist/index.js\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/happysubin/ts-practice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/happysubin/ts-practice/issues"
+  },
+  "homepage": "https://github.com/happysubin/ts-practice#readme",
+  "devDependencies": {
+    "tsc-watch": "^4.5.0"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1"
+  }
+}
